@@ -2,250 +2,846 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>虚拟机配置表单</title>
+  <title>虚拟机自动化部署平台</title>
   <style>
-    body { font-family: "Microsoft YaHei", sans-serif; background-color: #f6f6f6; margin: 0; padding: 0; }
-    .container { max-width: 1000px; margin: 30px auto; background: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h2 { text-align: center; margin-bottom: 20px; }
-    fieldset { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; padding: 20px; }
-    legend { font-weight: bold; padding: 0 10px; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: 500; }
-    input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; outline: none; }
-    textarea { height: 100px; resize: vertical; }
-    .folder-input { display: flex; align-items: center; }
-    .folder-input span { padding: 8px; background-color: #eee; border: 1px solid #ccc; border-right: none; border-radius: 4px 0 0 4px; }
-    .folder-input input { border-radius: 0 4px 4px 0; border-left: none; }
-    input[type="checkbox"], input[type="radio"] { transform: scale(1.2); margin-right: 5px; cursor: pointer; }
-    button { cursor: pointer; padding: 8px 16px; background-color: #4CAF50; border: none; border-radius: 4px; color: #fff; font-size: 14px; }
-    button:hover { background-color: #45a049; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-    thead tr { background-color: #f2f2f2; }
-    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
-    .delete-btn { background-color: #f44336; margin-left: 10px; }
-    .delete-btn:hover { background-color: #e53935; }
-    .scheduling-options { display: flex; flex-direction: column; gap: 15px; }
-    .scheduling-option { padding: 15px; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9; }
-    .scheduling-option.selected { border-color: #4CAF50; background: #e8f5e9; }
-    .scheduling-title { font-weight: bold; margin-bottom: 8px; }
-    .scheduling-desc { color: #666; font-size: 14px; margin-bottom: 10px; }
-    .esxi-config { display: none; }
-    .esxi-config.active { display: block; }
-    .esxi-host-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px; }
-    .esxi-host-item label { margin: 0; flex: 1; }
-    .warning-box { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 10px; border-radius: 4px; margin-top: 10px; }
-    .info-box { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; padding: 10px; border-radius: 4px; margin-top: 10px; }
-    #progressModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 9999; }
-    #progressModal .modal-content { background: #fff; padding: 20px; border-radius: 8px; text-align: center; width: 300px; }
-    #progressBar { width: 100%; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 10px; }
-    #progressBar div { height: 20px; width: 0; background: #4caf50; text-align: center; color: #fff; line-height: 20px; }
-    #errorMessage { background: #f44336; color: #fff; padding: 10px; border-radius: 4px; margin-bottom: 10px; display: none; }
-    #passwordsDisplay { background: #f0f0f0; padding: 10px; border-radius: 4px; margin-top: 10px; white-space: pre-wrap; display: none; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      line-height: 1.6;
+      color: #334155;
+    }
+    
+    .container { 
+      max-width: 1200px; 
+      margin: 20px auto; 
+      background: white; 
+      border-radius: 8px; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: #1e293b;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .header p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    
+    .main-content {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 600px;
+    }
+    
+    .sidebar {
+      background: #f1f5f9;
+      border-right: 1px solid #e2e8f0;
+      padding: 1.5rem;
+    }
+    
+    .nav-item {
+      display: block;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #475569;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    
+    .nav-item:hover {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+    
+    .nav-item.active {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .content-area {
+      padding: 2rem;
+    }
+    
+    .section {
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+    }
+    
+    .form-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .form-grid.two-col {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .form-help {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+    
+    .strategy-cards {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .strategy-card {
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    
+    .strategy-card:hover {
+      border-color: #3b82f6;
+    }
+    
+    .strategy-card.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    
+    .strategy-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    .strategy-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #1f2937;
+    }
+    
+    .strategy-desc {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    
+    .esxi-config {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      display: none;
+    }
+    
+    .esxi-config.show {
+      display: block;
+    }
+    
+    .vm-table-wrapper {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .vm-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .vm-table th {
+      background: #f8fafc;
+      padding: 0.875rem;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .vm-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: middle;
+    }
+    
+    .vm-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .vm-table input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+    
+    .btn-success {
+      background: #10b981;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #059669;
+    }
+    
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+    }
+    
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+    
+    .alert {
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    
+    .alert-info {
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
+      color: #1e40af;
+    }
+    
+    .alert-warning {
+      background: #fef3c7;
+      border: 1px solid #fbbf24;
+      color: #92400e;
+    }
+    
+    .alert-error {
+      background: #fee2e2;
+      border: 1px solid #f87171;
+      color: #991b1b;
+      display: none;
+    }
+    
+    .alert-success {
+      background: #d1fae5;
+      border: 1px solid #34d399;
+      color: #065f46;
+    }
+    
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .progress-modal {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 300px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: #3b82f6;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .status-auto {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .status-single {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .status-multi {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .password-display {
+      background: #f0fdf4;
+      border: 1px solid #22c55e;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    
+    .password-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #dcfce7;
+    }
+    
+    .password-vm {
+      font-weight: 600;
+      color: #166534;
+    }
+    
+    .password-value {
+      font-family: 'Courier New', monospace;
+      background: #166534;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .form-grid.two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .collapsed-info {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .collapsed-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.875rem;
+      color: #475569;
+    }
+    
+    .collapsed-info p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
   </style>
 </head>
 <body>
 <div class="container">
-  <h2>虚拟机配置表单</h2>
-  <div id="errorMessage"></div>
-  <form id="vmForm" method="post" action="/submit">
-    <!-- vCenter 连接信息 -->
-    <fieldset>
-      <legend>vCenter 连接信息</legend>
-      <div class="form-group"><label for="vcenter_hostname">vCenter 主机名</label><input type="text" id="vcenter_hostname" name="vcenter_hostname" required value="10.0.200.100"></div>
-      <div class="form-group"><label for="vcenter_username">vCenter 用户名</label><input type="text" id="vcenter_username" name="vcenter_username" required value="administrator@vsphere.local"></div>
-      <div class="form-group"><label for="vcenter_password">vCenter 密码</label><input type="text" id="vcenter_password" name="vcenter_password" required value="Leinao@323"></div>
-      <div class="form-group"><label for="datacenter_name">数据中心名称</label><input type="text" id="datacenter_name" name="datacenter_name" required value="Leinao"></div>
-      <div class="form-group"><label for="datastore_name">存储名称</label><select id="datastore_name" name="datastore_name" required><option value="104-ShanYan-60T">104-ShanYan-60T</option><option value="SandStone-28T">SandStone-28T</option><option value="ShanYan-SSD" selected>ShanYan-SSD</option></select></div>
-      <div class="form-group"><label for="vm_folder_suffix">虚机文件夹</label><div class="folder-input"><span>/vm/</span><input type="text" id="vm_folder_suffix" name="vm_folder_suffix" required placeholder="其他" value="其他"></div></div>
-    </fieldset>
-
-    <!-- 调度策略配置 -->
-    <fieldset>
-      <legend>调度策略配置</legend>
-      <div class="scheduling-options">
-        <div class="scheduling-option selected" data-strategy="cluster">
-          <input type="radio" id="strategy_cluster" name="scheduling_strategy" value="cluster" checked>
-          <label for="strategy_cluster" class="scheduling-title">集群自动调度</label>
-          <div class="scheduling-desc">
-            由VMware vSphere根据资源使用情况自动选择最佳ESXi主机部署虚机。适用于大多数场景。
-          </div>
-          <div class="info-box">
-            推荐：资源均衡分布，系统自动优化性能
-          </div>
-        </div>
-        
-        <div class="scheduling-option" data-strategy="single-esxi">
-          <input type="radio" id="strategy_single" name="scheduling_strategy" value="single-esxi">
-          <label for="strategy_single" class="scheduling-title">指定单台ESXi主机</label>
-          <div class="scheduling-desc">
-            将所有虚机部署到同一台ESXi主机上。适用于需要特定硬件资源的场景。
-          </div>
-          <div class="esxi-config" id="single-esxi-config">
-            <label for="single_esxi_hostname">ESXi主机IP地址:</label>
-            <input type="text" id="single_esxi_hostname" name="single_esxi_hostname" placeholder="例如: 10.0.200.28 或 192.168.7.11">
-            <div class="info-box" style="margin-top: 10px;">
-              <strong>常用ESXi主机参考:</strong><br>
-              • CPU集群: 10.0.200.11-18<br>
-              • GPU集群: 10.0.200.28-32<br>
-              • T4集群: 192.168.7.11-14
-            </div>
-            <div class="warning-box">
-              注意：所有虚机将部署到同一台主机，请确保该主机有足够的资源
-            </div>
-          </div>
-        </div>
-        
-        <div class="scheduling-option" data-strategy="multi-esxi">
-          <input type="radio" id="strategy_multi" name="scheduling_strategy" value="multi-esxi">
-          <label for="strategy_multi" class="scheduling-title">为每个VM指定不同ESXi主机</label>
-          <div class="scheduling-desc">
-            为每个虚机单独指定部署的ESXi主机。适用于需要特定硬件配置（如GPU、高性能存储）的场景。
-          </div>
-          <div class="esxi-config" id="multi-esxi-config">
-            <label>ESXi主机分配 (每行对应一个VM):</label>
-            <textarea id="multi_esxi_hostnames" name="multi_esxi_hostnames" placeholder="请按VM顺序输入ESXi主机IP，每行一个，例如:&#10;10.0.200.28&#10;10.0.200.29&#10;192.168.7.11"></textarea>
-            <div class="warning-box">
-              重要：ESXi主机数量必须与虚机数量完全一致，按VM表格顺序对应
-            </div>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-
-    <!-- 虚机信息 -->
-    <fieldset>
-      <legend>虚机信息</legend>
-      <table id="vmTable">
-        <thead>
-          <tr>
-            <th>序号</th>
-            <th>虚机名称</th>
-            <th>系统 Hostname</th>
-            <th>虚机 IP</th>
-            <th>ESXi主机 (多主机模式)</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><input type="text" name="vmName" placeholder="test-vm1"></td>
-            <td><input type="text" name="vmHostname" placeholder="guest-hostname1"></td>
-            <td><input type="text" name="vmIP" placeholder="10.0.101.190"></td>
-            <td class="esxi-assignment">自动分配</td>
-            <td><button type="button" class="delete-btn" onclick="deleteRow(this)">删除</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <button type="button" id="addVmBtn">+ 添加虚机</button>
-    </fieldset>
-
-    <!-- 模板与硬件配置 -->
-    <fieldset><legend>模板与硬件配置</legend><div class="form-group"><label for="template">模板名称</label><select id="template" name="template" required><option value="centos7.9-consul模板">centos7.9-consul模板</option><option value="openEuler22.03模板" selected>openEuler22.03模板</option><option value="ubuntu-20.04模板">ubuntu-20.04模板</option><option value="T4集群-Centos模板">T4集群-Centos模板</option></select></div><div class="form-group"><label for="num_cpus">CPU 数量</label><input type="number" id="num_cpus" name="num_cpus" required value="2"></div><div class="form-group"><label for="memory_gb">内存 (GB)</label><input type="number" id="memory_gb" name="memory_gb" required value="4"></div><div class="form-group"><label for="disk_size_gb">磁盘大小 (GB)</label><input type="number" id="disk_size_gb" name="disk_size_gb" required value="400"></div></fieldset>
-
-    <!-- 网络配置 -->
-    <fieldset><legend>网络配置</legend><div class="form-group"><label for="network_name">网络适配器名称</label><select id="network_name" name="network_name" required><option value="vlan100-生产">vlan100-生产</option><option value="vlan101-测试" selected>vlan101-测试</option><option value="vlan102-开发">vlan102-开发</option></select></div><div class="form-group"><label for="netmask">子网掩码</label><input type="text" id="netmask" name="netmask" required value="255.255.255.0"></div><div class="form-group"><label for="gateway">网关</label><input type="text" id="gateway" name="gateway" required value="10.0.101.1"></div><div class="form-group"><label for="dns_servers">DNS 服务器</label><input type="text" id="dns_servers" name="dns_servers" placeholder="223.5.5.5,8.8.8.8" value="223.5.5.5"></div></fieldset>
-
-    <!-- 集群配置 -->
-    <fieldset><legend>集群配置</legend>
-      <div class="info-box">
-        <strong>注意:</strong> 集群配置仅在"集群自动调度"模式下使用。指定ESXi主机时会直接部署到该主机，无需集群配置。
-      </div>
-      <div class="form-group"><label for="cluster">集群 (仅集群自动调度模式)</label><select id="cluster" name="cluster" required><option value="Leinao-CPU集群" selected>Leinao-CPU集群</option><option value="Leinao-GPU集群">Leinao-GPU集群</option><option value="Leinao-T4集群">Leinao-T4集群</option></select></div><div class="form-group"><label for="resource_pool">资源池 (仅集群自动调度模式)</label><input type="text" id="resource_pool" name="resource_pool" required value="Resources"></div></fieldset>
-
-    <!-- 隐藏字段 -->
-    <input type="hidden" id="vm_names" name="vm_names">
-    <input type="hidden" id="vm_ips" name="vm_ips">
-    <input type="hidden" id="vm_folder" name="vm_folder">
-    <input type="hidden" id="esxi_hostnames" name="esxi_hostnames">
+  <div class="header">
+    <h1>虚拟机自动化部署平台</h1>
+    <p>基于 VMware vSphere 的企业级虚机部署解决方案</p>
+  </div>
+  
+  <div class="main-content">
+    <nav class="sidebar">
+      <button class="nav-item active" onclick="showSection('basic')">基础配置</button>
+      <button class="nav-item" onclick="showSection('hardware')">硬件配置</button>
+      <button class="nav-item" onclick="showSection('network')">网络配置</button>
+      <button class="nav-item" onclick="showSection('scheduling')">调度策略</button>
+      <button class="nav-item" onclick="showSection('vms')">虚拟机列表</button>
+      <button class="nav-item" onclick="showSection('advanced')">高级设置</button>
+    </nav>
     
-    <div style="text-align: center;"><button type="submit">提交配置</button></div>
-  </form>
-  <pre id="passwordsDisplay"></pre>
+    <div class="content-area">
+      <form id="vmForm" method="post" action="/submit">
+        <div id="errorMessage" class="alert alert-error"></div>
+        
+        <!-- 基础配置 -->
+        <section id="basic" class="section active">
+          <h2 class="section-title">基础配置</h2>
+          
+          <div class="collapsed-info">
+            <h4>vCenter 连接信息</h4>
+            <p>使用预配置的 vCenter 服务器 (10.0.200.100) 和数据中心 (Leinao)</p>
+          </div>
+          
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="datastore_name">存储数据存储</label>
+              <select id="datastore_name" name="datastore_name" required>
+                <option value="ShanYan-SSD" selected>ShanYan-SSD</option>
+                <option value="104-ShanYan-60T">104-ShanYan-60T</option>
+                <option value="SandStone-28T">SandStone-28T</option>
+              </select>
+              <div class="form-help">选择虚拟机磁盘文件的存储位置</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="vm_folder_suffix">部署目录</label>
+              <input type="text" id="vm_folder_suffix" name="vm_folder_suffix" required value="其他">
+              <div class="form-help">虚拟机将部署到 /vm/{目录名} 下</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="template">虚拟机模板</label>
+            <select id="template" name="template" required>
+              <option value="openEuler22.03模板" selected>openEuler 22.03</option>
+              <option value="centos7.9-consul模板">CentOS 7.9 (Consul版本)</option>
+              <option value="ubuntu-20.04模板">Ubuntu 20.04 LTS</option>
+              <option value="T4集群-Centos模板">CentOS (T4集群专用)</option>
+            </select>
+            <div class="form-help">选择虚拟机的操作系统模板</div>
+          </div>
+        </section>
+        
+        <!-- 硬件配置 -->
+        <section id="hardware" class="section">
+          <h2 class="section-title">硬件配置</h2>
+          
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="num_cpus">CPU 核心数</label>
+              <input type="number" id="num_cpus" name="num_cpus" required value="2" min="1" max="32">
+            </div>
+            
+            <div class="form-group">
+              <label for="memory_gb">内存大小 (GB)</label>
+              <input type="number" id="memory_gb" name="memory_gb" required value="4" min="1" max="256">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="disk_size_gb">磁盘大小 (GB)</label>
+            <input type="number" id="disk_size_gb" name="disk_size_gb" required value="400" min="20" max="2000">
+            <div class="form-help">虚拟机系统盘大小，建议不少于100GB</div>
+          </div>
+        </section>
+        
+        <!-- 网络配置 -->
+        <section id="network" class="section">
+          <h2 class="section-title">网络配置</h2>
+          
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="network_name">网络适配器</label>
+              <select id="network_name" name="network_name" required>
+                <option value="vlan101-测试" selected>VLAN101 - 测试网络</option>
+                <option value="vlan100-生产">VLAN100 - 生产网络</option>
+                <option value="vlan102-开发">VLAN102 - 开发网络</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="gateway">网关地址</label>
+              <input type="text" id="gateway" name="gateway" required value="10.0.101.1">
+            </div>
+          </div>
+          
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="netmask">子网掩码</label>
+              <input type="text" id="netmask" name="netmask" required value="255.255.255.0">
+            </div>
+            
+            <div class="form-group">
+              <label for="dns_servers">DNS 服务器</label>
+              <input type="text" id="dns_servers" name="dns_servers" value="223.5.5.5" placeholder="多个DNS用逗号分隔">
+            </div>
+          </div>
+        </section>
+        
+        <!-- 调度策略 -->
+        <section id="scheduling" class="section">
+          <h2 class="section-title">调度策略</h2>
+          
+          <div class="strategy-cards">
+            <div class="strategy-card selected" data-strategy="cluster">
+              <input type="radio" id="strategy_cluster" name="scheduling_strategy" value="cluster" checked>
+              <div class="strategy-title">集群自动调度</div>
+              <div class="strategy-desc">由 vSphere 根据资源使用情况自动选择最佳ESXi主机，实现负载均衡</div>
+              
+              <div class="esxi-config">
+                <div class="form-grid two-col">
+                  <div class="form-group">
+                    <label for="cluster">计算集群</label>
+                    <select id="cluster" name="cluster" required>
+                      <option value="Leinao-CPU集群" selected>Leinao-CPU集群</option>
+                      <option value="Leinao-GPU集群">Leinao-GPU集群</option>
+                      <option value="Leinao-T4集群">Leinao-T4集群</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="resource_pool">资源池</label>
+                    <input type="text" id="resource_pool" name="resource_pool" required value="Resources">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="strategy-card" data-strategy="single-esxi">
+              <input type="radio" id="strategy_single" name="scheduling_strategy" value="single-esxi">
+              <div class="strategy-title">指定单台ESXi主机</div>
+              <div class="strategy-desc">将所有虚拟机部署到同一台ESXi主机，适用于特定硬件需求</div>
+              
+              <div class="esxi-config">
+                <div class="form-group">
+                  <label for="single_esxi_hostname">ESXi 主机地址</label>
+                  <input type="text" id="single_esxi_hostname" name="single_esxi_hostname" placeholder="例如: 10.0.200.28">
+                </div>
+                
+                <div class="alert alert-info">
+                  <strong>主机参考:</strong><br>
+                  • CPU集群: 10.0.200.11-18<br>
+                  • GPU集群: 10.0.200.28-32<br>
+                  • T4集群: 192.168.7.11-14
+                </div>
+              </div>
+            </div>
+            
+            <div class="strategy-card" data-strategy="multi-esxi">
+              <input type="radio" id="strategy_multi" name="scheduling_strategy" value="multi-esxi">
+              <div class="strategy-title">为每个VM指定不同主机</div>
+              <div class="strategy-desc">为每个虚拟机单独指定ESXi主机，实现精确的资源分配</div>
+              
+              <div class="esxi-config">
+                <div class="form-group">
+                  <label for="multi_esxi_hostnames">ESXi 主机列表</label>
+                  <textarea id="multi_esxi_hostnames" name="multi_esxi_hostnames" rows="4" 
+                            placeholder="每行一个ESXi主机IP，按VM顺序对应：&#10;10.0.200.28&#10;10.0.200.29&#10;192.168.7.11"></textarea>
+                  <div class="form-help">主机数量必须与虚拟机数量一致</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 虚拟机列表 -->
+        <section id="vms" class="section">
+          <h2 class="section-title">虚拟机列表</h2>
+          
+          <div class="vm-table-wrapper">
+            <table class="vm-table" id="vmTable">
+              <thead>
+                <tr>
+                  <th width="8%">序号</th>
+                  <th width="25%">虚机名称</th>
+                  <th width="22%">主机名</th>
+                  <th width="20%">IP地址</th>
+                  <th width="20%">调度状态</th>
+                  <th width="10%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><input type="text" name="vmName" placeholder="test-vm1"></td>
+                  <td><input type="text" name="vmHostname" placeholder="hostname1"></td>
+                  <td><input type="text" name="vmIP" placeholder="10.0.101.190"></td>
+                  <td><span class="status-badge status-auto">集群自动调度</span></td>
+                  <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)">删除</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div style="margin-top: 1rem;">
+            <button type="button" id="addVmBtn" class="btn btn-success">+ 添加虚拟机</button>
+          </div>
+        </section>
+        
+        <!-- 高级设置 -->
+        <section id="advanced" class="section">
+          <h2 class="section-title">高级设置</h2>
+          
+          <div class="collapsed-info">
+            <h4>隐藏的系统配置</h4>
+            <p>以下配置已自动设置，通常不需要修改</p>
+          </div>
+          
+          <!-- 隐藏的字段 -->
+          <input type="hidden" name="vcenter_hostname" value="10.0.200.100">
+          <input type="hidden" name="vcenter_username" value="administrator@vsphere.local">
+          <input type="hidden" name="vcenter_password" value="Leinao@323">
+          <input type="hidden" name="datacenter_name" value="Leinao">
+          <input type="hidden" name="dns_suffix" value="">
+          
+          <!-- 动态生成的隐藏字段 -->
+          <input type="hidden" id="vm_names" name="vm_names">
+          <input type="hidden" id="vm_ips" name="vm_ips">
+          <input type="hidden" id="vm_folder" name="vm_folder">
+          <input type="hidden" id="esxi_hostnames" name="esxi_hostnames">
+        </section>
+        
+        <div class="navigation-buttons">
+          <button type="button" id="prevBtn" class="btn btn-secondary" onclick="previousSection()">上一步</button>
+          <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextSection()">下一步</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">开始部署</button>
+        </div>
+      </form>
+      
+      <div id="passwordsDisplay" class="password-display"></div>
+    </div>
+  </div>
 </div>
 
-<!-- 进度条遮罩 -->
-<div id="progressModal"><div class="modal-content"><h3>任务执行中...</h3><div id="progressBar"><div></div></div></div></div>
+<!-- 进度条 -->
+<div id="progressContainer" class="progress-container">
+  <div class="progress-modal">
+    <h3>正在部署虚拟机...</h3>
+    <p>请耐心等待，系统正在为您创建虚拟机</p>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div id="progressText">0%</div>
+  </div>
+</div>
 
 <script>
+  let currentSection = 0;
   let vmCounter = 1;
+  const sections = ['basic', 'hardware', 'network', 'scheduling', 'vms', 'advanced'];
+  
+  // 导航功能
+  function showSection(sectionId) {
+    // 隐藏所有section
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    // 显示目标section
+    document.getElementById(sectionId).classList.add('active');
+    document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+    
+    currentSection = sections.indexOf(sectionId);
+    updateNavigationButtons();
+  }
+  
+  function nextSection() {
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      showSection(sections[currentSection]);
+    }
+  }
+  
+  function previousSection() {
+    if (currentSection > 0) {
+      currentSection--;
+      showSection(sections[currentSection]);
+    }
+  }
+  
+  function updateNavigationButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    prevBtn.style.display = currentSection > 0 ? 'block' : 'none';
+    nextBtn.style.display = currentSection < sections.length - 1 ? 'block' : 'none';
+    submitBtn.style.display = currentSection === sections.length - 1 ? 'block' : 'none';
+  }
   
   // 调度策略切换
-  document.querySelectorAll('input[name="scheduling_strategy"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-      // 更新选中状态
-      document.querySelectorAll('.scheduling-option').forEach(opt => opt.classList.remove('selected'));
-      this.closest('.scheduling-option').classList.add('selected');
+  document.querySelectorAll('.strategy-card').forEach(card => {
+    card.addEventListener('click', function() {
+      // 移除所有选中状态
+      document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.esxi-config').forEach(c => c.classList.remove('show'));
       
-      // 显示/隐藏对应配置
-      document.querySelectorAll('.esxi-config').forEach(config => config.classList.remove('active'));
+      // 选中当前卡片
+      this.classList.add('selected');
+      const radio = this.querySelector('input[type="radio"]');
+      radio.checked = true;
       
-      if (this.value === 'single-esxi') {
-        document.getElementById('single-esxi-config').classList.add('active');
-      } else if (this.value === 'multi-esxi') {
-        document.getElementById('multi-esxi-config').classList.add('active');
-        updateEsxiAssignmentDisplay();
+      // 显示对应的配置
+      const config = this.querySelector('.esxi-config');
+      if (config) {
+        config.classList.add('show');
       }
       
       updateVmTableDisplay();
     });
   });
   
-  // 更新VM表格中ESXi主机分配显示
+  // 更新VM表格显示
   function updateVmTableDisplay() {
     const strategy = document.querySelector('input[name="scheduling_strategy"]:checked').value;
-    const esxiCells = document.querySelectorAll('.esxi-assignment');
+    const statusCells = document.querySelectorAll('.vm-table tbody .status-badge');
     
-    esxiCells.forEach((cell, index) => {
+    statusCells.forEach((cell, index) => {
+      cell.className = 'status-badge';
       if (strategy === 'cluster') {
+        cell.classList.add('status-auto');
         cell.textContent = '集群自动调度';
-        cell.style.color = '#666';
       } else if (strategy === 'single-esxi') {
-        const selectedHost = document.getElementById('single_esxi_hostname').value;
-        cell.textContent = selectedHost || '待选择';
-        cell.style.color = '#2196F3';
+        cell.classList.add('status-single');
+        const host = document.getElementById('single_esxi_hostname').value;
+        cell.textContent = host ? `单机: ${host}` : '待指定主机';
       } else if (strategy === 'multi-esxi') {
-        cell.textContent = `主机${index + 1}`;
-        cell.style.color = '#FF9800';
+        cell.classList.add('status-multi');
+        cell.textContent = `主机 ${index + 1}`;
       }
     });
   }
   
-  // 更新多主机模式的ESXi分配显示
-  function updateEsxiAssignmentDisplay() {
-    const textarea = document.getElementById('multi_esxi_hostnames');
-    const hosts = textarea.value.split('\n').map(h => h.trim()).filter(h => h);
-    const esxiCells = document.querySelectorAll('.esxi-assignment');
-    
-    esxiCells.forEach((cell, index) => {
-      if (hosts[index]) {
-        cell.textContent = hosts[index];
-        cell.style.color = '#4CAF50';
-      } else {
-        cell.textContent = `主机${index + 1} (未指定)`;
-        cell.style.color = '#f44336';
-      }
-    });
-  }
-  
-  // 监听单ESXi主机输入变化
+  // 监听ESXi主机输入变化
   document.getElementById('single_esxi_hostname').addEventListener('input', updateVmTableDisplay);
   
-  // 监听多ESXi主机文本框变化
   document.getElementById('multi_esxi_hostnames').addEventListener('input', function() {
     if (document.querySelector('input[name="scheduling_strategy"]:checked').value === 'multi-esxi') {
-      updateEsxiAssignmentDisplay();
+      updateMultiEsxiDisplay();
     }
   });
   
-  // 删除行函数
+  function updateMultiEsxiDisplay() {
+    const textarea = document.getElementById('multi_esxi_hostnames');
+    const hosts = textarea.value.split('\n').map(h => h.trim()).filter(h => h);
+    const statusCells = document.querySelectorAll('.vm-table tbody .status-badge');
+    
+    statusCells.forEach((cell, index) => {
+      if (hosts[index]) {
+        cell.className = 'status-badge status-auto';
+        cell.textContent = hosts[index];
+      } else {
+        cell.className = 'status-badge status-multi';
+        cell.textContent = `主机 ${index + 1} (未指定)`;
+      }
+    });
+  }
+  
+  // VM表格操作
   function deleteRow(btn) {
-    btn.parentNode.parentNode.remove();
+    if (document.querySelectorAll('#vmTable tbody tr').length <= 1) {
+      showError('至少需要保留一台虚拟机');
+      return;
+    }
+    btn.closest('tr').remove();
     updateRowNumbers();
     updateVmTableDisplay();
   }
   
-  // 更新行号
   function updateRowNumbers() {
     const rows = document.querySelectorAll('#vmTable tbody tr');
     rows.forEach((row, index) => {
@@ -254,19 +850,19 @@
     vmCounter = rows.length;
   }
   
-  // 添加VM行
   document.getElementById('addVmBtn').addEventListener('click', function() {
     vmCounter++;
+    const tbody = document.querySelector('#vmTable tbody');
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
       <td>${vmCounter}</td>
       <td><input type="text" name="vmName" placeholder="test-vm${vmCounter}"></td>
-      <td><input type="text" name="vmHostname" placeholder="guest-hostname${vmCounter}"></td>
+      <td><input type="text" name="vmHostname" placeholder="hostname${vmCounter}"></td>
       <td><input type="text" name="vmIP" placeholder="10.0.101.${190 + vmCounter - 1}"></td>
-      <td class="esxi-assignment">自动分配</td>
-      <td><button type="button" class="delete-btn" onclick="deleteRow(this)">删除</button></td>
+      <td><span class="status-badge status-auto">集群自动调度</span></td>
+      <td><button type="button" class="btn btn-danger" onclick="deleteRow(this)">删除</button></td>
     `;
-    document.querySelector('#vmTable tbody').appendChild(newRow);
+    tbody.appendChild(newRow);
     updateVmTableDisplay();
   });
   
@@ -274,69 +870,66 @@
   document.getElementById('vmForm').addEventListener('submit', function(event) {
     event.preventDefault();
     
-    const errorDiv = document.getElementById('errorMessage');
-    errorDiv.style.display = 'none';
-    errorDiv.innerText = '';
-    
-    // 验证调度策略配置
-    const strategy = document.querySelector('input[name="scheduling_strategy"]:checked').value;
-    const vmCount = document.querySelectorAll('input[name="vmName"]').length;
-    
-    if (strategy === 'single-esxi') {
-      const selectedHost = document.getElementById('single_esxi_hostname').value;
-      if (!selectedHost) {
-        errorDiv.style.display = 'block';
-        errorDiv.innerText = '请选择ESXi主机';
-        return;
-      }
-    } else if (strategy === 'multi-esxi') {
-      const hosts = document.getElementById('multi_esxi_hostnames').value
-        .split('\n').map(h => h.trim()).filter(h => h);
-      if (hosts.length !== vmCount) {
-        errorDiv.style.display = 'block';
-        errorDiv.innerText = `ESXi主机数量(${hosts.length})与虚机数量(${vmCount})不匹配`;
-        return;
-      }
+    // 验证表单
+    if (!validateForm()) {
+      return;
     }
     
-    const progressModal = document.getElementById('progressModal');
-    progressModal.style.display = 'flex';
-    const progressBar = document.getElementById('progressBar').firstElementChild;
-    progressBar.style.width = '0%';
-    progressBar.innerText = '0%';
+    // 显示进度条
+    showProgress();
     
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress = Math.min(progress + 10, 90);
-      progressBar.style.width = progress + '%';
-      progressBar.innerText = progress + '%';
-    }, 500);
+    // 准备表单数据
+    const formData = new FormData();
     
-    const formData = new FormData(document.getElementById('vmForm'));
+    // 基础配置
+    formData.set('vcenter_hostname', '10.0.200.100');
+    formData.set('vcenter_username', 'administrator@vsphere.local');
+    formData.set('vcenter_password', 'Leinao@323');
+    formData.set('datacenter_name', 'Leinao');
+    formData.set('datastore_name', document.getElementById('datastore_name').value);
+    formData.set('vm_folder', '/vm/' + document.getElementById('vm_folder_suffix').value);
+    formData.set('template', document.getElementById('template').value);
     
-    // 处理文件夹路径
-    const folderSuffix = formData.get('vm_folder_suffix');
-    formData.set('vm_folder', '/vm/' + folderSuffix);
-    formData.delete('vm_folder_suffix');
+    // 硬件配置
+    formData.set('num_cpus', document.getElementById('num_cpus').value);
+    formData.set('memory_mb', parseInt(document.getElementById('memory_gb').value) * 1024);
+    formData.set('disk_size_gb', document.getElementById('disk_size_gb').value);
     
-    // 处理内存单位转换
-    const gb = parseInt(formData.get('memory_gb') || '0', 10);
-    formData.set('memory_mb', gb * 1024);
-    formData.delete('memory_gb');
+    // 网络配置
+    formData.set('network_name', document.getElementById('network_name').value);
+    formData.set('netmask', document.getElementById('netmask').value);
+    formData.set('gateway', document.getElementById('gateway').value);
+    formData.set('dns_servers', document.getElementById('dns_servers').value);
+    formData.set('dns_suffix', '');
     
-    // 处理DNS服务器
-    const dns = formData.get('dns_servers')?.trim();
-    if (dns) formData.set('dns_servers', dns);
+    // 调度策略
+    const strategy = document.querySelector('input[name="scheduling_strategy"]:checked').value;
+    formData.set('scheduling_strategy', strategy);
     
-    // 收集VM信息
+    if (strategy === 'cluster') {
+      formData.set('cluster', document.getElementById('cluster').value);
+      formData.set('resource_pool', document.getElementById('resource_pool').value);
+    } else if (strategy === 'single-esxi') {
+      formData.set('esxi_hostnames', document.getElementById('single_esxi_hostname').value);
+      formData.set('cluster', '');
+      formData.set('resource_pool', '');
+    } else if (strategy === 'multi-esxi') {
+      const hosts = document.getElementById('multi_esxi_hostnames').value
+        .split('\n').map(h => h.trim()).filter(h => h).join(',');
+      formData.set('esxi_hostnames', hosts);
+      formData.set('cluster', '');
+      formData.set('resource_pool', '');
+    }
+    
+    // VM列表
     const names = [], hostnames = [], ips = [];
-    document.querySelectorAll('input[name="vmName"]').forEach((e, i) => {
-      if (e.value.trim()) {
-        names.push(e.value.trim());
-        const hn = document.querySelectorAll('input[name="vmHostname"]')[i].value.trim();
-        if (hn) hostnames.push(hn);
-        const ip = document.querySelectorAll('input[name="vmIP"]')[i].value.trim();
-        if (ip) ips.push(ip);
+    document.querySelectorAll('input[name="vmName"]').forEach((input, i) => {
+      if (input.value.trim()) {
+        names.push(input.value.trim());
+        const hostnameInput = document.querySelectorAll('input[name="vmHostname"]')[i];
+        const ipInput = document.querySelectorAll('input[name="vmIP"]')[i];
+        hostnames.push(hostnameInput.value.trim());
+        ips.push(ipInput.value.trim());
       }
     });
     
@@ -344,55 +937,152 @@
     formData.set('hostnames', hostnames.join(','));
     formData.set('vm_ips', ips.join(','));
     
-    // 处理ESXi主机配置
-    let esxiHosts = '';
-    if (strategy === 'single-esxi') {
-      esxiHosts = document.getElementById('single_esxi_hostname').value;
-    } else if (strategy === 'multi-esxi') {
-      esxiHosts = document.getElementById('multi_esxi_hostnames').value
-        .split('\n').map(h => h.trim()).filter(h => h).join(',');
-    }
-    
-    if (esxiHosts) {
-      formData.set('esxi_hostnames', esxiHosts);
-    }
-    
-    fetch(this.action, {
+    // 提交请求
+    fetch('/submit', {
       method: 'POST',
       body: formData
     })
-    .then(r => {
-      clearInterval(interval);
-      if (!r.ok) {
-        return r.json().then(d => {
-          throw new Error(d.details || '未知错误');
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.details || '请求失败');
         });
       }
-      return r.json();
+      return response.json();
     })
     .then(data => {
-      progressBar.style.width = '100%';
-      progressBar.innerText = '100%';
+      hideProgress();
+      showSuccess('虚拟机部署成功！');
       
-      // 显示密码列表
-      const pwBlock = document.getElementById('passwordsDisplay');
-      pwBlock.textContent = Object.entries(data.passwords)
-        .map(([vm, p]) => vm + ': ' + p).join('\n');
-      pwBlock.style.display = 'block';
-      
-      setTimeout(() => {
-        progressModal.style.display = 'none';
-      }, 1000);
+      if (data.passwords && Object.keys(data.passwords).length > 0) {
+        displayPasswords(data.passwords);
+      }
     })
-    .catch(err => {
-      clearInterval(interval);
-      progressModal.style.display = 'none';
-      errorDiv.style.display = 'block';
-      errorDiv.innerText = '任务执行失败：' + err.message;
+    .catch(error => {
+      hideProgress();
+      showError('部署失败：' + error.message);
     });
   });
   
-  // 初始化显示
+  function validateForm() {
+    const strategy = document.querySelector('input[name="scheduling_strategy"]:checked').value;
+    const vmCount = document.querySelectorAll('input[name="vmName"]').length;
+    
+    // 检查VM名称
+    const vmNames = [];
+    let hasEmptyName = false;
+    document.querySelectorAll('input[name="vmName"]').forEach(input => {
+      if (!input.value.trim()) {
+        hasEmptyName = true;
+      } else {
+        vmNames.push(input.value.trim());
+      }
+    });
+    
+    if (hasEmptyName) {
+      showError('请填写所有虚拟机名称');
+      showSection('vms');
+      return false;
+    }
+    
+    // 检查调度策略配置
+    if (strategy === 'single-esxi') {
+      const host = document.getElementById('single_esxi_hostname').value;
+      if (!host) {
+        showError('请指定ESXi主机地址');
+        showSection('scheduling');
+        return false;
+      }
+    } else if (strategy === 'multi-esxi') {
+      const hosts = document.getElementById('multi_esxi_hostnames').value
+        .split('\n').map(h => h.trim()).filter(h => h);
+      if (hosts.length !== vmCount) {
+        showError(`ESXi主机数量(${hosts.length})与虚机数量(${vmCount})不匹配`);
+        showSection('scheduling');
+        return false;
+      }
+    }
+    
+    return true;
+  }
+  
+  function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    errorDiv.scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  function showSuccess(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.className = 'alert alert-success';
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    errorDiv.scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  function showProgress() {
+    const container = document.getElementById('progressContainer');
+    const fill = document.getElementById('progressFill');
+    const text = document.getElementById('progressText');
+    
+    container.style.display = 'flex';
+    fill.style.width = '0%';
+    text.textContent = '0%';
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 10 + 5;
+      if (progress > 90) progress = 90;
+      
+      fill.style.width = progress + '%';
+      text.textContent = Math.round(progress) + '%';
+    }, 800);
+    
+    container.dataset.intervalId = interval;
+  }
+  
+  function hideProgress() {
+    const container = document.getElementById('progressContainer');
+    const fill = document.getElementById('progressFill');
+    const text = document.getElementById('progressText');
+    const intervalId = container.dataset.intervalId;
+    
+    if (intervalId) {
+      clearInterval(parseInt(intervalId));
+    }
+    
+    fill.style.width = '100%';
+    text.textContent = '100%';
+    
+    setTimeout(() => {
+      container.style.display = 'none';
+    }, 1000);
+  }
+  
+  function displayPasswords(passwords) {
+    const display = document.getElementById('passwordsDisplay');
+    let html = '<h3 style="margin-bottom: 1rem; color: #166534;">🎉 虚拟机部署成功！</h3>';
+    html += '<p style="margin-bottom: 1rem; color: #16a34a;">以下是为每台虚拟机生成的随机密码：</p>';
+    
+    for (const [vm, password] of Object.entries(passwords)) {
+      html += `
+        <div class="password-item">
+          <div class="password-vm">${vm}</div>
+          <div class="password-value">${password}</div>
+        </div>
+      `;
+    }
+    
+    html += '<p style="margin-top: 1rem; font-size: 0.875rem; color: #059669;">请妥善保存这些密码，页面刷新后将无法再次查看。</p>';
+    
+    display.innerHTML = html;
+    display.style.display = 'block';
+    display.scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  // 初始化
+  updateNavigationButtons();
   updateVmTableDisplay();
 </script>
 </body>
