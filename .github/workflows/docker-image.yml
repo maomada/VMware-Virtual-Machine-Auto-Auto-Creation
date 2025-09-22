@@ -29,5 +29,5 @@ jobs:
           context: .
           push: true
           tags: |
-            maosifen514/VMware app:latest
-            maosifen514/VMware app:${{ github.sha }}
+            maosifen514/VMware-app:latest
+            maosifen514/VMware-app:${{ github.sha }}
