@@ -29,5 +29,5 @@ jobs:
           context: .
           push: true
           tags: |
-            mydockeruser/myapp:latest
-            mydockeruser/myapp:${{ github.sha }}
+            maosifen514/VMware app:latest
+            maosifen514/VMware app:${{ github.sha }}
