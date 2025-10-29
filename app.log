@@ -1,0 +1,312 @@
+2025-07-10 09:56:27,117 WARNING  * Debugger is active!
+2025-07-10 09:56:27,117 INFO  * Debugger PIN: 247-118-130
+2025-07-10 09:56:35,354 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-10 09:56:35,354 INFO [33mPress CTRL+C to quit[0m
+2025-07-10 09:56:35,355 INFO  * Restarting with stat
+2025-07-10 09:56:35,541 WARNING  * Debugger is active!
+2025-07-10 09:56:35,542 INFO  * Debugger PIN: 141-080-540
+2025-07-10 09:56:37,862 INFO 192.168.12.64 - - [10/Jul/2025 09:56:37] "GET / HTTP/1.1" 200 -
+2025-07-10 10:03:27,302 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组（保留模板密码和新 root 密码）] *************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（在控制机上探测 TCP 连接）] *****************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（在新 VM 上用 ansible_ssh_pass 登录）] *********************
+fatal: [10.0.101.89]: FAILED! => {"changed": false, "elapsed": 300, "msg": "timed out waiting for ping module test: Invalid/incorrect password: Warning: Permanently added '10.0.101.89' (ED25519) to the list of known hosts.\r\nPermission denied, please try again."}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-10 10:03:27,303 INFO 192.168.12.64 - - [10/Jul/2025 10:03:27] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 01:26:53,568 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 01:26:53,568 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 01:26:53,569 INFO  * Restarting with stat
+2025-07-11 01:26:53,816 WARNING  * Debugger is active!
+2025-07-11 01:26:53,817 INFO  * Debugger PIN: 105-759-827
+2025-07-11 01:27:08,710 INFO 192.168.12.64 - - [11/Jul/2025 01:27:08] "GET / HTTP/1.1" 200 -
+2025-07-11 01:27:09,530 INFO 192.168.12.64 - - [11/Jul/2025 01:27:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-11 01:30:40,111 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 01:30:40,112 INFO 192.168.12.64 - - [11/Jul/2025 01:30:40] "POST /submit HTTP/1.1" 200 -
+2025-07-11 01:56:00,129 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 01:56:00,129 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 01:56:00,130 INFO  * Restarting with stat
+2025-07-11 01:56:00,363 WARNING  * Debugger is active!
+2025-07-11 01:56:00,363 INFO  * Debugger PIN: 113-525-446
+2025-07-11 02:01:26,734 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:01:26,735 INFO 192.168.12.64 - - [11/Jul/2025 02:01:26] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:08:54,484 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:08:54,484 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:08:54,485 INFO  * Restarting with stat
+2025-07-11 02:08:54,711 WARNING  * Debugger is active!
+2025-07-11 02:08:54,712 INFO  * Debugger PIN: 142-644-068
+2025-07-11 02:08:56,593 INFO 192.168.12.64 - - [11/Jul/2025 02:08:56] "GET / HTTP/1.1" 200 -
+2025-07-11 02:10:59,258 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:10:59,258 INFO 192.168.12.64 - - [11/Jul/2025 02:10:59] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:19:21,949 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:19:21,949 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:19:21,950 INFO  * Restarting with stat
+2025-07-11 02:19:22,186 WARNING  * Debugger is active!
+2025-07-11 02:19:22,186 INFO  * Debugger PIN: 134-509-015
+2025-07-11 02:19:31,336 INFO 192.168.12.64 - - [11/Jul/2025 02:19:31] "GET / HTTP/1.1" 200 -
+2025-07-11 02:21:51,589 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:21:51,589 INFO 192.168.12.64 - - [11/Jul/2025 02:21:51] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:30:13,881 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:30:13,882 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:30:13,882 INFO  * Restarting with stat
+2025-07-11 02:30:14,119 WARNING  * Debugger is active!
+2025-07-11 02:30:14,119 INFO  * Debugger PIN: 134-982-768
+2025-07-11 02:30:16,653 INFO 192.168.12.64 - - [11/Jul/2025 02:30:16] "GET / HTTP/1.1" 200 -
+2025-07-11 02:30:22,005 INFO 192.168.12.64 - - [11/Jul/2025 02:30:22] "GET / HTTP/1.1" 200 -
+2025-07-11 02:34:56,036 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:34:56,036 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:34:56,037 INFO  * Restarting with stat
+2025-07-11 02:34:56,265 WARNING  * Debugger is active!
+2025-07-11 02:34:56,266 INFO  * Debugger PIN: 419-746-095
+2025-07-11 02:34:58,777 INFO 192.168.12.64 - - [11/Jul/2025 02:34:58] "GET / HTTP/1.1" 200 -
+2025-07-11 02:35:18,627 INFO 192.168.12.64 - - [11/Jul/2025 02:35:18] "GET / HTTP/1.1" 200 -
+2025-07-11 02:37:18,283 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:37:18,284 INFO 192.168.12.64 - - [11/Jul/2025 02:37:18] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:48:24,228 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:48:24,228 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:48:24,229 INFO  * Restarting with stat
+2025-07-11 02:48:24,461 WARNING  * Debugger is active!
+2025-07-11 02:48:24,461 INFO  * Debugger PIN: 137-481-259
+2025-07-11 02:48:26,914 INFO 192.168.12.64 - - [11/Jul/2025 02:48:26] "GET / HTTP/1.1" 200 -
+2025-07-11 02:57:27,271 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:57:27,272 INFO 192.168.12.64 - - [11/Jul/2025 02:57:27] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:14:11,471 INFO  * Detected change in '/app/app.py', reloading
+2025-07-11 03:14:11,518 INFO  * Restarting with stat
+2025-07-11 03:14:11,754 WARNING  * Debugger is active!
+2025-07-11 03:14:11,755 INFO  * Debugger PIN: 137-481-259
+2025-07-11 03:14:18,854 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:14:18,855 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:14:18,855 INFO  * Restarting with stat
+2025-07-11 03:14:19,088 WARNING  * Debugger is active!
+2025-07-11 03:14:19,088 INFO  * Debugger PIN: 569-644-835
+2025-07-11 03:14:45,860 INFO 192.168.12.64 - - [11/Jul/2025 03:14:45] "GET / HTTP/1.1" 200 -
+2025-07-11 03:14:51,890 INFO 192.168.12.64 - - [11/Jul/2025 03:14:51] "GET / HTTP/1.1" 200 -
+2025-07-11 03:15:07,972 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+stderr:
+ERROR! 'delegate_to' is not a valid attribute for a Play
+
+The error appears to be in '/app/create_vm.yml': line 131, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: 写入密码映射到文件
+  ^ here
+
+2025-07-11 03:15:07,973 INFO 192.168.12.64 - - [11/Jul/2025 03:15:07] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 03:20:32,628 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:20:32,628 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:20:32,629 INFO  * Restarting with stat
+2025-07-11 03:20:32,856 WARNING  * Debugger is active!
+2025-07-11 03:20:32,857 INFO  * Debugger PIN: 137-954-250
+2025-07-11 03:20:37,155 INFO 192.168.12.64 - - [11/Jul/2025 03:20:37] "GET / HTTP/1.1" 200 -
+2025-07-11 03:22:25,700 INFO 192.168.12.64 - - [11/Jul/2025 03:22:25] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:27:01,779 INFO 192.168.12.64 - - [11/Jul/2025 03:27:01] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:36:01,937 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:36:01,937 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:36:01,938 INFO  * Restarting with stat
+2025-07-11 03:36:02,165 WARNING  * Debugger is active!
+2025-07-11 03:36:02,166 INFO  * Debugger PIN: 794-858-984
+2025-07-11 03:36:22,454 INFO 192.168.12.64 - - [11/Jul/2025 03:36:22] "GET / HTTP/1.1" 200 -
+2025-07-11 03:37:56,885 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组（保留模板密码和新 root 密码）] *************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 SSH 可达] ***********************************************************
+fatal: [10.0.101.89 -> localhost]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'localhost' (ED25519) to the list of known hosts.\r\nroot@localhost: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-11 03:37:56,886 INFO 192.168.12.64 - - [11/Jul/2025 03:37:56] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 05:31:30,857 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 05:31:30,857 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 05:31:30,858 INFO  * Restarting with stat
+2025-07-11 05:31:31,090 WARNING  * Debugger is active!
+2025-07-11 05:31:31,090 INFO  * Debugger PIN: 899-299-142
+2025-07-11 05:32:29,710 INFO 192.168.12.64 - - [11/Jul/2025 05:32:29] "GET / HTTP/1.1" 200 -
+2025-07-11 05:32:33,462 INFO 192.168.12.64 - - [11/Jul/2025 05:32:33] "GET / HTTP/1.1" 200 -
+2025-07-11 05:33:58,059 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测，host 用 inventory_hostname）] **************
+fatal: [10.0.101.89 -> localhost]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'localhost' (ED25519) to the list of known hosts.\r\nroot@localhost: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-11 05:33:58,059 INFO 192.168.12.64 - - [11/Jul/2025 05:33:58] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 05:43:27,223 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 05:43:27,223 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 05:43:27,224 INFO  * Restarting with stat
+2025-07-11 05:43:27,458 WARNING  * Debugger is active!
+2025-07-11 05:43:27,459 INFO  * Debugger PIN: 112-022-472
+2025-07-11 05:46:03,802 INFO 192.168.12.64 - - [11/Jul/2025 05:46:03] "GET / HTTP/1.1" 200 -
+2025-07-11 05:46:06,918 INFO 192.168.12.64 - - [11/Jul/2025 05:46:06] "GET / HTTP/1.1" 200 -
+2025-07-11 05:48:11,854 INFO 192.168.12.64 - - [11/Jul/2025 05:48:11] "POST /submit HTTP/1.1" 200 -
+2025-07-11 05:52:56,159 INFO 192.168.12.64 - - [11/Jul/2025 05:52:56] "POST /submit HTTP/1.1" 200 -
+2025-07-11 05:57:42,458 INFO 192.168.12.64 - - [11/Jul/2025 05:57:42] "GET / HTTP/1.1" 200 -
+2025-07-11 05:59:43,661 INFO 192.168.12.64 - - [11/Jul/2025 05:59:43] "POST /submit HTTP/1.1" 200 -

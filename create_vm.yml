@@ -1,0 +1,128 @@
+---
+- name: 生成随机密码并通过模板克隆 VM
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    template_root_pass: "leinao@123"
+  tasks:
+    - name: 读取 ini 文件
+      slurp:
+        src: ./vm_params.ini
+      register: ini_raw
+
+    - name: 解析 ini 为变量
+      set_fact:
+        vm_params: "{{ ini_raw.content | b64decode | community.general.from_ini }}"
+
+    - name: 拆分 VM 列表、hostname 列表、IP 列表
+      set_fact:
+        vm_list:       "{{ vm_params.vm_parameters.vm_names.split(',') | map('trim') | list }}"
+        hostname_list: "{{ vm_params.vm_parameters.hostnames.split(',') | map('trim') | list }}"
+        ip_list:       "{{ vm_params.vm_parameters.vm_ips.split(',') | map('trim') | list }}"
+
+    - name: 检查 vm_names、hostnames、vm_ips 数量一致
+      assert:
+        that:
+          - vm_list | length == hostname_list | length
+          - vm_list | length == ip_list | length
+        fail_msg: "vm_names、hostnames、vm_ips 数量不一致"
+
+    - name: 为每台 VM 生成随机 root 密码
+      set_fact:
+        vm_passwords: >-
+          {{ vm_passwords | default({}) | combine({ item: lookup('password','/dev/null length=16 chars=ascii_letters') }) }}
+      loop: "{{ vm_list }}"
+      loop_control:
+        loop_var: item
+
+    - name: 克隆并等待 guest customization 完成
+      community.vmware.vmware_guest:
+        hostname:       "{{ vm_params.vm_parameters.vcenter_hostname }}"
+        username:       "{{ vm_params.vm_parameters.vcenter_username }}"
+        password:       "{{ vm_params.vm_parameters.vcenter_password }}"
+        validate_certs: false
+        datacenter:     "{{ vm_params.vm_parameters.datacenter_name }}"
+        folder:         "{{ vm_params.vm_parameters.vm_folder }}"
+        name:           "{{ item.0 }}"
+        template:       "{{ vm_params.vm_parameters.template }}"
+        state:          poweredon
+        hardware:
+          memory_mb: "{{ vm_params.vm_parameters.memory_mb }}"
+          num_cpus:  "{{ vm_params.vm_parameters.num_cpus }}"
+        disk:
+          - size_gb:   "{{ vm_params.vm_parameters.disk_size_gb }}"
+            type:      thin
+            datastore: "{{ vm_params.vm_parameters.datastore_name }}"
+        networks:
+          - name:    "{{ vm_params.vm_parameters.network_name }}"
+            ip:      "{{ item.2 }}"
+            netmask: "{{ vm_params.vm_parameters.netmask }}"
+            gateway: "{{ vm_params.vm_parameters.gateway }}"
+        customization:
+          hostname: "{{ item.1 }}"
+          dns_servers: "{{ vm_params.vm_parameters.dns_servers.split(',') }}"
+          
+        wait_for_customization: yes
+        wait_for_ip_address:   yes
+        cluster:       "{{ vm_params.vm_parameters.cluster }}"
+        resource_pool: "{{ vm_params.vm_parameters.resource_pool }}"
+        esxi_hostname: "{{ vm_params.vm_parameters.esxi_hostname | default(omit) }}"
+      loop: "{{ vm_list | zip(hostname_list, ip_list) | list }}"
+
+    - name: 把每台 VM 动态加入 new_vms 组
+      add_host:
+        name:               "{{ item.2 }}"
+        groups:             new_vms
+        ansible_host:       "{{ item.2 }}"
+        ansible_user:       root
+        ansible_ssh_pass:   "{{ template_root_pass }}"
+        new_root_password:  "{{ vm_passwords[item.0] }}"
+      loop: "{{ vm_list | zip(hostname_list, ip_list) | list }}"
+      loop_control:
+        loop_var: item
+
+    - name: 写入密码映射到文件，以便后端读取
+      run_once: true
+      delegate_to: localhost
+      copy:
+        content: "{{ vm_passwords | to_json }}"
+        dest: /tmp/vm_passwords.json
+        mode: '0640'
+        force: true
+
+
+- name: 登录新 VM，修改 root 密码并注入公钥
+  hosts: new_vms
+  gather_facts: no
+  vars:
+    ansible_ssh_common_args: >-
+      -o ControlMaster=no
+      -o StrictHostKeyChecking=no
+      -o UserKnownHostsFile=/dev/null
+
+  tasks:
+    - name: 等待 22 端口打开（控制机探测） 
+      # 【关键】指定在控制机本地执行，不走 SSH
+      connection: local
+      delegate_to: localhost
+      wait_for:
+        host:    "{{ inventory_hostname }}"
+        port:    22
+        state:   started
+        delay:   10
+        timeout: 300
+
+    - name: 测试 SSH 连接（使用 ansible_ssh_pass）
+      wait_for_connection:
+        timeout: 300
+        sleep:   5
+
+    - name: 修改 root 密码
+      shell: echo "root:{{ new_root_password }}" | chpasswd
+
+    - name: 注入本地公钥到 root
+      ansible.posix.authorized_key:
+        user:  root
+        state: present
+        key:   "{{ lookup('file','/app/keys/xuji_key.pub') }}"
