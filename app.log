@@ -1,0 +1,2050 @@
+2025-07-10 09:56:27,117 WARNING  * Debugger is active!
+2025-07-10 09:56:27,117 INFO  * Debugger PIN: 247-118-130
+2025-07-10 09:56:35,354 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-10 09:56:35,354 INFO [33mPress CTRL+C to quit[0m
+2025-07-10 09:56:35,355 INFO  * Restarting with stat
+2025-07-10 09:56:35,541 WARNING  * Debugger is active!
+2025-07-10 09:56:35,542 INFO  * Debugger PIN: 141-080-540
+2025-07-10 09:56:37,862 INFO 192.168.12.64 - - [10/Jul/2025 09:56:37] "GET / HTTP/1.1" 200 -
+2025-07-10 10:03:27,302 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组（保留模板密码和新 root 密码）] *************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（在控制机上探测 TCP 连接）] *****************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（在新 VM 上用 ansible_ssh_pass 登录）] *********************
+fatal: [10.0.101.89]: FAILED! => {"changed": false, "elapsed": 300, "msg": "timed out waiting for ping module test: Invalid/incorrect password: Warning: Permanently added '10.0.101.89' (ED25519) to the list of known hosts.\r\nPermission denied, please try again."}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-10 10:03:27,303 INFO 192.168.12.64 - - [10/Jul/2025 10:03:27] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 01:26:53,568 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 01:26:53,568 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 01:26:53,569 INFO  * Restarting with stat
+2025-07-11 01:26:53,816 WARNING  * Debugger is active!
+2025-07-11 01:26:53,817 INFO  * Debugger PIN: 105-759-827
+2025-07-11 01:27:08,710 INFO 192.168.12.64 - - [11/Jul/2025 01:27:08] "GET / HTTP/1.1" 200 -
+2025-07-11 01:27:09,530 INFO 192.168.12.64 - - [11/Jul/2025 01:27:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-11 01:30:40,111 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 01:30:40,112 INFO 192.168.12.64 - - [11/Jul/2025 01:30:40] "POST /submit HTTP/1.1" 200 -
+2025-07-11 01:56:00,129 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 01:56:00,129 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 01:56:00,130 INFO  * Restarting with stat
+2025-07-11 01:56:00,363 WARNING  * Debugger is active!
+2025-07-11 01:56:00,363 INFO  * Debugger PIN: 113-525-446
+2025-07-11 02:01:26,734 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:01:26,735 INFO 192.168.12.64 - - [11/Jul/2025 02:01:26] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:08:54,484 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:08:54,484 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:08:54,485 INFO  * Restarting with stat
+2025-07-11 02:08:54,711 WARNING  * Debugger is active!
+2025-07-11 02:08:54,712 INFO  * Debugger PIN: 142-644-068
+2025-07-11 02:08:56,593 INFO 192.168.12.64 - - [11/Jul/2025 02:08:56] "GET / HTTP/1.1" 200 -
+2025-07-11 02:10:59,258 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:10:59,258 INFO 192.168.12.64 - - [11/Jul/2025 02:10:59] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:19:21,949 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:19:21,949 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:19:21,950 INFO  * Restarting with stat
+2025-07-11 02:19:22,186 WARNING  * Debugger is active!
+2025-07-11 02:19:22,186 INFO  * Debugger PIN: 134-509-015
+2025-07-11 02:19:31,336 INFO 192.168.12.64 - - [11/Jul/2025 02:19:31] "GET / HTTP/1.1" 200 -
+2025-07-11 02:21:51,589 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:21:51,589 INFO 192.168.12.64 - - [11/Jul/2025 02:21:51] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:30:13,881 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:30:13,882 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:30:13,882 INFO  * Restarting with stat
+2025-07-11 02:30:14,119 WARNING  * Debugger is active!
+2025-07-11 02:30:14,119 INFO  * Debugger PIN: 134-982-768
+2025-07-11 02:30:16,653 INFO 192.168.12.64 - - [11/Jul/2025 02:30:16] "GET / HTTP/1.1" 200 -
+2025-07-11 02:30:22,005 INFO 192.168.12.64 - - [11/Jul/2025 02:30:22] "GET / HTTP/1.1" 200 -
+2025-07-11 02:34:56,036 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:34:56,036 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:34:56,037 INFO  * Restarting with stat
+2025-07-11 02:34:56,265 WARNING  * Debugger is active!
+2025-07-11 02:34:56,266 INFO  * Debugger PIN: 419-746-095
+2025-07-11 02:34:58,777 INFO 192.168.12.64 - - [11/Jul/2025 02:34:58] "GET / HTTP/1.1" 200 -
+2025-07-11 02:35:18,627 INFO 192.168.12.64 - - [11/Jul/2025 02:35:18] "GET / HTTP/1.1" 200 -
+2025-07-11 02:37:18,283 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:37:18,284 INFO 192.168.12.64 - - [11/Jul/2025 02:37:18] "POST /submit HTTP/1.1" 200 -
+2025-07-11 02:48:24,228 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 02:48:24,228 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 02:48:24,229 INFO  * Restarting with stat
+2025-07-11 02:48:24,461 WARNING  * Debugger is active!
+2025-07-11 02:48:24,461 INFO  * Debugger PIN: 137-481-259
+2025-07-11 02:48:26,914 INFO 192.168.12.64 - - [11/Jul/2025 02:48:26] "GET / HTTP/1.1" 200 -
+2025-07-11 02:57:27,271 WARNING 未在 Ansible 输出中找到 JSON 密码映射，stdout 最后一行是： ['']
+2025-07-11 02:57:27,272 INFO 192.168.12.64 - - [11/Jul/2025 02:57:27] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:14:11,471 INFO  * Detected change in '/app/app.py', reloading
+2025-07-11 03:14:11,518 INFO  * Restarting with stat
+2025-07-11 03:14:11,754 WARNING  * Debugger is active!
+2025-07-11 03:14:11,755 INFO  * Debugger PIN: 137-481-259
+2025-07-11 03:14:18,854 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:14:18,855 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:14:18,855 INFO  * Restarting with stat
+2025-07-11 03:14:19,088 WARNING  * Debugger is active!
+2025-07-11 03:14:19,088 INFO  * Debugger PIN: 569-644-835
+2025-07-11 03:14:45,860 INFO 192.168.12.64 - - [11/Jul/2025 03:14:45] "GET / HTTP/1.1" 200 -
+2025-07-11 03:14:51,890 INFO 192.168.12.64 - - [11/Jul/2025 03:14:51] "GET / HTTP/1.1" 200 -
+2025-07-11 03:15:07,972 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+stderr:
+ERROR! 'delegate_to' is not a valid attribute for a Play
+
+The error appears to be in '/app/create_vm.yml': line 131, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: 写入密码映射到文件
+  ^ here
+
+2025-07-11 03:15:07,973 INFO 192.168.12.64 - - [11/Jul/2025 03:15:07] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 03:20:32,628 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:20:32,628 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:20:32,629 INFO  * Restarting with stat
+2025-07-11 03:20:32,856 WARNING  * Debugger is active!
+2025-07-11 03:20:32,857 INFO  * Debugger PIN: 137-954-250
+2025-07-11 03:20:37,155 INFO 192.168.12.64 - - [11/Jul/2025 03:20:37] "GET / HTTP/1.1" 200 -
+2025-07-11 03:22:25,700 INFO 192.168.12.64 - - [11/Jul/2025 03:22:25] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:27:01,779 INFO 192.168.12.64 - - [11/Jul/2025 03:27:01] "POST /submit HTTP/1.1" 200 -
+2025-07-11 03:36:01,937 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 03:36:01,937 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 03:36:01,938 INFO  * Restarting with stat
+2025-07-11 03:36:02,165 WARNING  * Debugger is active!
+2025-07-11 03:36:02,166 INFO  * Debugger PIN: 794-858-984
+2025-07-11 03:36:22,454 INFO 192.168.12.64 - - [11/Jul/2025 03:36:22] "GET / HTTP/1.1" 200 -
+2025-07-11 03:37:56,885 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组（保留模板密码和新 root 密码）] *************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 SSH 可达] ***********************************************************
+fatal: [10.0.101.89 -> localhost]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'localhost' (ED25519) to the list of known hosts.\r\nroot@localhost: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-11 03:37:56,886 INFO 192.168.12.64 - - [11/Jul/2025 03:37:56] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 05:31:30,857 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 05:31:30,857 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 05:31:30,858 INFO  * Restarting with stat
+2025-07-11 05:31:31,090 WARNING  * Debugger is active!
+2025-07-11 05:31:31,090 INFO  * Debugger PIN: 899-299-142
+2025-07-11 05:32:29,710 INFO 192.168.12.64 - - [11/Jul/2025 05:32:29] "GET / HTTP/1.1" 200 -
+2025-07-11 05:32:33,462 INFO 192.168.12.64 - - [11/Jul/2025 05:32:33] "GET / HTTP/1.1" 200 -
+2025-07-11 05:33:58,059 ERROR Ansible 执行失败，returncode=4
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [克隆并等待 guest customization 完成] *************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测，host 用 inventory_hostname）] **************
+fatal: [10.0.101.89 -> localhost]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'localhost' (ED25519) to the list of known hosts.\r\nroot@localhost: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-11 05:33:58,059 INFO 192.168.12.64 - - [11/Jul/2025 05:33:58] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-07-11 05:43:27,223 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-07-11 05:43:27,223 INFO [33mPress CTRL+C to quit[0m
+2025-07-11 05:43:27,224 INFO  * Restarting with stat
+2025-07-11 05:43:27,458 WARNING  * Debugger is active!
+2025-07-11 05:43:27,459 INFO  * Debugger PIN: 112-022-472
+2025-07-11 05:46:03,802 INFO 192.168.12.64 - - [11/Jul/2025 05:46:03] "GET / HTTP/1.1" 200 -
+2025-07-11 05:46:06,918 INFO 192.168.12.64 - - [11/Jul/2025 05:46:06] "GET / HTTP/1.1" 200 -
+2025-07-11 05:48:11,854 INFO 192.168.12.64 - - [11/Jul/2025 05:48:11] "POST /submit HTTP/1.1" 200 -
+2025-07-11 05:52:56,159 INFO 192.168.12.64 - - [11/Jul/2025 05:52:56] "POST /submit HTTP/1.1" 200 -
+2025-07-11 05:57:42,458 INFO 192.168.12.64 - - [11/Jul/2025 05:57:42] "GET / HTTP/1.1" 200 -
+2025-07-11 05:59:43,661 INFO 192.168.12.64 - - [11/Jul/2025 05:59:43] "POST /submit HTTP/1.1" 200 -
+2025-08-27 06:11:32,725 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.101.20:5000
+2025-08-27 06:11:32,725 INFO [33mPress CTRL+C to quit[0m
+2025-08-27 06:11:32,726 INFO  * Restarting with stat
+2025-08-27 06:11:32,958 WARNING  * Debugger is active!
+2025-08-27 06:11:32,959 INFO  * Debugger PIN: 140-684-035
+2025-08-27 06:12:24,128 INFO 192.168.12.64 - - [27/Aug/2025 06:12:24] "GET / HTTP/1.1" 200 -
+2025-08-27 06:13:21,150 INFO ESXi主机配置: 10.0.200.28
+2025-08-27 06:13:21,150 INFO 调度策略: single-esxi
+2025-08-27 06:13:21,151 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 06:13:21,151 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89', 'hostnames': 'miyaofenfa', 'vm_ips': '10.0.101.89', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '400', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-GPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'single-esxi', 'esxi_hostnames': '10.0.200.28'}
+2025-08-27 06:13:21,151 INFO 开始执行 Ansible Playbook...
+2025-08-27 06:13:23,574 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: single-esxi\n所有VM将部署到: 10.0.200.28\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+failed: [localhost] (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.89", "miyaofenfa", "10.0.101.89"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 06:13:23,575 INFO 192.168.12.64 - - [27/Aug/2025 06:13:23] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-08-27 06:22:41,867 INFO 192.168.12.64 - - [27/Aug/2025 06:22:41] "GET / HTTP/1.1" 200 -
+2025-08-27 06:22:58,148 INFO ESXi主机配置: 10.0.200.28
+2025-08-27 06:22:58,148 INFO 调度策略: single-esxi
+2025-08-27 06:22:58,148 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 06:22:58,149 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89', 'hostnames': 'miyaofenfa', 'vm_ips': '10.0.101.89', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '400', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-GPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'single-esxi', 'esxi_hostnames': '10.0.200.28'}
+2025-08-27 06:22:58,149 INFO 开始执行 Ansible Playbook...
+2025-08-27 06:24:43,206 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: single-esxi\n所有VM将部署到: 10.0.200.28\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.28']) 
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 1台\n- 调度策略: 指定单台主机(10.0.200.28)\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa, ESXi: 10.0.200.28)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: qB3kK5JQPV8A0DIx\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: qB3kK5JQPV8A0DIx"
+}
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+ok: [10.0.101.89]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入成功！\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+
+TASK [验证SSH密钥配置] *********************************************************
+fatal: [10.0.101.89]: FAILED! => {"changed": true, "cmd": "echo \"检查SSH密钥配置...\"\nls -la /root/.ssh/\nwc -l /root/.ssh/authorized_keys\n", "delta": "0:00:00.006163", "end": "2025-08-27 14:24:43.056082", "msg": "non-zero return code", "rc": 1, "start": "2025-08-27 14:24:43.049919", "stderr": "wc: /root/.ssh/authorized_keys: No such file or directory", "stderr_lines": ["wc: /root/.ssh/authorized_keys: No such file or directory"], "stdout": "检查SSH密钥配置...\ntotal 8\ndrwx------  2 root root  48 Aug 13 10:12 .\ndr-xr-x---. 4 root root 197 Aug 27 14:24 ..\n-rw-------  1 root root 659 Aug 13 10:12 known_hosts\n-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old", "stdout_lines": ["检查SSH密钥配置...", "total 8", "drwx------  2 root root  48 Aug 13 10:12 .", "dr-xr-x---. 4 root root 197 Aug 27 14:24 ..", "-rw-------  1 root root 659 Aug 13 10:12 known_hosts", "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old"]}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=7    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=12   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 06:24:43,208 INFO 192.168.12.64 - - [27/Aug/2025 06:24:43] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-08-27 06:36:48,240 INFO 192.168.12.64 - - [27/Aug/2025 06:36:48] "GET / HTTP/1.1" 200 -
+2025-08-27 06:39:34,978 INFO ESXi主机配置: 10.0.200.28
+2025-08-27 06:39:34,978 INFO 调度策略: single-esxi
+2025-08-27 06:39:34,979 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 06:39:34,979 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89', 'hostnames': 'miyaofenfa', 'vm_ips': '10.0.101.89', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '400', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-GPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'single-esxi', 'esxi_hostnames': '10.0.200.28'}
+2025-08-27 06:39:34,980 INFO 开始执行 Ansible Playbook...
+2025-08-27 06:41:40,515 INFO Ansible 执行成功
+2025-08-27 06:41:40,515 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: single-esxi\n所有VM将部署到: 10.0.200.28\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.28']) 
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 1台\n- 调度策略: 指定单台主机(10.0.200.28)\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa, ESXi: 10.0.200.28)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: ZB3R2cTFQLzWlvXI\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: ZB3R2cTFQLzWlvXI"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.89]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+ok: [10.0.101.89]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: False\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+skipping: [10.0.101.89]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+changed: [10.0.101.89]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.89]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 14:41 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 14:41 ..",
+        "-rw-------  1 root root  37 Aug 27 14:41 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        " Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "🎉 VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n🔐 安全配置:\n✅ root密码: 已修改为随机密码 (ZB3R2cTFQLzWlvXI)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\n🚀 VM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: ZB3R2cTFQLzWlvXI)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=12   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+2025-08-27 06:41:40,515 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 06:41:40,516 INFO 成功读取密码映射: {'测试-密钥分发-101.89': 'ZB3R2cTFQLzWlvXI'}
+2025-08-27 06:41:40,516 INFO 192.168.12.64 - - [27/Aug/2025 06:41:40] "POST /submit HTTP/1.1" 200 -
+2025-08-27 07:04:49,052 INFO 192.168.12.64 - - [27/Aug/2025 07:04:49] "GET / HTTP/1.1" 200 -
+2025-08-27 07:05:27,188 INFO ESXi主机配置: 10.0.200.28
+2025-08-27 07:05:27,188 INFO 调度策略: single-esxi
+2025-08-27 07:05:27,190 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 07:05:27,190 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89', 'hostnames': 'miyaofenfa', 'vm_ips': '10.0.101.89', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-GPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'single-esxi', 'esxi_hostnames': '10.0.200.28'}
+2025-08-27 07:05:27,190 INFO 开始执行 Ansible Playbook...
+2025-08-27 07:07:50,446 INFO Ansible 执行成功
+2025-08-27 07:07:50,446 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: single-esxi\n所有VM将部署到: 10.0.200.28\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.28']) 
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 1台\n- 调度策略: 指定单台主机(10.0.200.28)\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa, ESXi: 10.0.200.28)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: 3SafBE1soxSea5yL\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: 3SafBE1soxSea5yL"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.89]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.89]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.89]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.89]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.89]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 15:07 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 15:07 ..",
+        "-rw-------  1 root root 761 Aug 27 15:07 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "🎉 VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n🔐 安全配置:\n✅ root密码: 已修改为随机密码 (3SafBE1soxSea5yL)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\n🚀 VM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: 3SafBE1soxSea5yL)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=12   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+2025-08-27 07:07:50,446 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 07:07:50,447 INFO 成功读取密码映射: {'测试-密钥分发-101.89': '3SafBE1soxSea5yL'}
+2025-08-27 07:07:50,448 INFO 192.168.12.64 - - [27/Aug/2025 07:07:50] "POST /submit HTTP/1.1" 200 -
+2025-08-27 07:19:41,403 INFO ESXi主机配置: 10.0.200.44,10.0.200.41,10.0.200.31
+2025-08-27 07:19:41,404 INFO 调度策略: multi-esxi
+2025-08-27 07:19:41,404 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 07:19:41,404 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90,测试-密钥分发-101.91', 'hostnames': 'miyaofenfa,miyaofenfa1,miyaofenfa2', 'vm_ips': '10.0.101.89,10.0.101.90,10.0.101.91', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'multi-esxi', 'esxi_hostnames': '10.0.200.44,10.0.200.41,10.0.200.31'}
+2025-08-27 07:19:41,405 INFO 开始执行 Ansible Playbook...
+2025-08-27 07:19:44,822 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+ok: [localhost] => (item=测试-密钥分发-101.91)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: multi-esxi\nVM将按指定主机分别部署\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+failed: [localhost] (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.44']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.89", "miyaofenfa", "10.0.101.89", "10.0.200.44"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90', '10.0.200.41']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.90", "miyaofenfa1", "10.0.101.90", "10.0.200.41"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91', '10.0.200.31']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.91", "miyaofenfa2", "10.0.101.91", "10.0.200.31"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 07:19:44,823 INFO 192.168.12.64 - - [27/Aug/2025 07:19:44] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-08-27 08:07:34,049 INFO ESXi主机配置: 10.0.200.44,10.0.200.41,10.0.200.42
+2025-08-27 08:07:34,049 INFO 调度策略: multi-esxi
+2025-08-27 08:07:34,050 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 08:07:34,050 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90,测试-密钥分发-101.91', 'hostnames': 'miyaofenfa,miyaofenfa1,miyaofenfa2', 'vm_ips': '10.0.101.89,10.0.101.90,10.0.101.91', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'multi-esxi', 'esxi_hostnames': '10.0.200.44,10.0.200.41,10.0.200.42'}
+2025-08-27 08:07:34,051 INFO 开始执行 Ansible Playbook...
+2025-08-27 08:07:37,524 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+ok: [localhost] => (item=测试-密钥分发-101.91)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: multi-esxi\nVM将按指定主机分别部署\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+failed: [localhost] (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.44']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.89", "miyaofenfa", "10.0.101.89", "10.0.200.44"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90', '10.0.200.41']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.90", "miyaofenfa1", "10.0.101.90", "10.0.200.41"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91', '10.0.200.42']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.91", "miyaofenfa2", "10.0.101.91", "10.0.200.42"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 08:07:37,525 INFO 192.168.12.64 - - [27/Aug/2025 08:07:37] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-08-27 08:57:29,790 INFO 192.168.12.64 - - [27/Aug/2025 08:57:29] "GET / HTTP/1.1" 200 -
+2025-08-27 09:00:09,636 INFO ESXi主机配置: 10.0.200.14,10.0.200.15,10.0.200.16
+2025-08-27 09:00:09,636 INFO 调度策略: multi-esxi
+2025-08-27 09:00:09,636 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 09:00:09,637 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90,测试-密钥分发-101.91', 'hostnames': 'miyaofenfa,miyaofenfa1,miyaofenfa2', 'vm_ips': '10.0.101.89,10.0.101.90,10.0.101.91', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'multi-esxi', 'esxi_hostnames': '10.0.200.14,10.0.200.15,10.0.200.16'}
+2025-08-27 09:00:09,637 INFO 开始执行 Ansible Playbook...
+2025-08-27 09:00:13,102 ERROR Ansible 执行失败，returncode=2
+stdout:
+
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+ok: [localhost] => (item=测试-密钥分发-101.91)
+
+TASK [显示生成的随机密码（调试用）] ********************************************
+skipping: [localhost]
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: multi-esxi\nVM将按指定主机分别部署\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+failed: [localhost] (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.14']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.89", "miyaofenfa", "10.0.101.89", "10.0.200.14"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90', '10.0.200.15']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.90", "miyaofenfa1", "10.0.101.90", "10.0.200.15"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+failed: [localhost] (item=['测试-密钥分发-101.91', 'miyaofenfa2', '10.0.101.91', '10.0.200.16']) => {"ansible_loop_var": "item", "changed": false, "item": ["测试-密钥分发-101.91", "miyaofenfa2", "10.0.101.91", "10.0.200.16"], "msg": "parameters are mutually exclusive: cluster|esxi_hostname"}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+
+
+stderr:
+[WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 09:00:13,103 INFO 192.168.12.64 - - [27/Aug/2025 09:00:13] "[35m[1mPOST /submit HTTP/1.1[0m" 500 -
+2025-08-27 09:04:12,803 INFO 192.168.12.64 - - [27/Aug/2025 09:04:12] "GET / HTTP/1.1" 200 -
+2025-08-27 09:05:07,698 INFO ESXi主机配置: 10.0.200.14,10.0.200.15
+2025-08-27 09:05:07,698 INFO 调度策略: multi-esxi
+2025-08-27 09:05:07,698 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 09:05:07,698 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90', 'hostnames': 'miyaofenfa,miyaofenfa1', 'vm_ips': '10.0.101.89,10.0.101.90', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'multi-esxi', 'esxi_hostnames': '10.0.200.14,10.0.200.15'}
+2025-08-27 09:05:07,699 INFO 开始执行 Ansible Playbook...
+2025-08-27 09:08:22,135 INFO Ansible 执行成功
+2025-08-27 09:08:22,135 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: multi-esxi\nVM将按指定主机分别部署\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.14'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90', '10.0.200.15'])
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 2台\n- 调度策略: 分别指定主机\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa, ESXi: 10.0.200.14)\n2. 测试-密钥分发-101.90 -> 10.0.101.90 (主机名: miyaofenfa1, ESXi: 10.0.200.15)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+ok: [10.0.101.90 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: 1XPg4cl8xjHTMrNf\n即将注入SSH密钥\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "正在配置VM: 10.0.101.90\n模板原始密码: leinao@123\n新生成的随机密码: QBzaqDxqX0YXd5vh\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: 1XPg4cl8xjHTMrNf"
+}
+ok: [10.0.101.90] => {
+    "msg": "root密码已成功修改为随机生成的密码: QBzaqDxqX0YXd5vh"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.89]
+ok: [10.0.101.90]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.89]
+changed: [10.0.101.90]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.90\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.89]
+changed: [10.0.101.90]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.89]
+skipping: [10.0.101.90]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.89]
+changed: [10.0.101.90]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 17:08 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 17:08 ..",
+        "-rw-------  1 root root 761 Aug 27 17:08 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+ok: [10.0.101.90] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 17:08 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 17:08 ..",
+        "-rw-------  1 root root 761 Aug 27 17:08 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (1XPg4cl8xjHTMrNf)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: 1XPg4cl8xjHTMrNf)\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.90\nIP地址: 10.0.101.90\n主机名: miyaofenfa1\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (QBzaqDxqX0YXd5vh)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.90\n2. 密码认证: ssh root@10.0.101.90 (密码: QBzaqDxqX0YXd5vh)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+10.0.101.90                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=12   changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+
+2025-08-27 09:08:22,135 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.90 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 09:08:22,135 INFO 成功读取密码映射: {'测试-密钥分发-101.89': '1XPg4cl8xjHTMrNf', '测试-密钥分发-101.90': 'QBzaqDxqX0YXd5vh'}
+2025-08-27 09:08:22,136 INFO 192.168.12.64 - - [27/Aug/2025 09:08:22] "POST /submit HTTP/1.1" 200 -
+2025-08-27 09:12:18,504 INFO 192.168.12.64 - - [27/Aug/2025 09:12:18] "GET / HTTP/1.1" 200 -
+2025-08-27 09:12:47,670 INFO 调度策略: cluster
+2025-08-27 09:12:47,670 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-27 09:12:47,670 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'ShanYan-SSD', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90', 'hostnames': 'miyaofenfa,miyaofenfa1', 'vm_ips': '10.0.101.89,10.0.101.90', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '200', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'cluster'}
+2025-08-27 09:12:47,671 INFO 开始执行 Ansible Playbook...
+2025-08-27 09:13:23,260 INFO 192.168.12.64 - - [27/Aug/2025 09:13:23] "GET / HTTP/1.1" 200 -
+2025-08-27 09:13:23,345 INFO 192.168.12.64 - - [27/Aug/2025 09:13:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-27 09:14:33,480 INFO 192.168.66.147 - - [27/Aug/2025 09:14:33] "GET / HTTP/1.1" 200 -
+2025-08-27 09:14:33,753 INFO 192.168.66.147 - - [27/Aug/2025 09:14:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-27 09:16:02,456 INFO Ansible 执行成功
+2025-08-27 09:16:02,456 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+skipping: [localhost]
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: cluster\n将使用集群自动调度\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90'])
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 2台\n- 调度策略: 集群自动调度\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa)\n2. 测试-密钥分发-101.90 -> 10.0.101.90 (主机名: miyaofenfa1)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+ok: [10.0.101.90 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+ok: [10.0.101.90]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: V8pCMc7cDPQu3PW1\n即将注入SSH密钥\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "正在配置VM: 10.0.101.90\n模板原始密码: leinao@123\n新生成的随机密码: 81GI5G3Ymkpgw67y\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.89]
+changed: [10.0.101.90]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: V8pCMc7cDPQu3PW1"
+}
+ok: [10.0.101.90] => {
+    "msg": "root密码已成功修改为随机生成的密码: 81GI5G3Ymkpgw67y"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.90\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.89]
+skipping: [10.0.101.90]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 17:15 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 17:15 ..",
+        "-rw-------  1 root root 761 Aug 27 17:15 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+ok: [10.0.101.90] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 27 17:15 .",
+        "dr-xr-x---. 4 root root 197 Aug 27 17:15 ..",
+        "-rw-------  1 root root 761 Aug 27 17:15 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (V8pCMc7cDPQu3PW1)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: V8pCMc7cDPQu3PW1)\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.90\nIP地址: 10.0.101.90\n主机名: miyaofenfa1\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (81GI5G3Ymkpgw67y)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.90\n2. 密码认证: ssh root@10.0.101.90 (密码: 81GI5G3Ymkpgw67y)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+10.0.101.90                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=11   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+2025-08-27 09:16:02,456 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.90 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-27 09:16:02,457 INFO 成功读取密码映射: {'测试-密钥分发-101.89': 'V8pCMc7cDPQu3PW1', '测试-密钥分发-101.90': '81GI5G3Ymkpgw67y'}
+2025-08-27 09:16:02,458 INFO 192.168.12.64 - - [27/Aug/2025 09:16:02] "POST /submit HTTP/1.1" 200 -
+2025-08-27 09:38:00,060 INFO 192.168.12.64 - - [27/Aug/2025 09:38:00] "GET / HTTP/1.1" 200 -
+2025-08-29 07:56:01,910 INFO 192.168.12.64 - - [29/Aug/2025 07:56:01] "GET / HTTP/1.1" 200 -
+2025-08-29 07:56:02,154 INFO 192.168.12.64 - - [29/Aug/2025 07:56:02] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-29 07:58:37,781 INFO 调度策略: cluster
+2025-08-29 07:58:37,783 INFO 配置文件已写入: /app/vm_params.ini
+2025-08-29 07:58:37,783 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'SandStone-28T', 'vm_names': '李航杰测试用-101.133,李航杰测试用-101.134,李航杰测试用-101.135', 'hostnames': 'ceshi,ceshi1,ceshi2', 'vm_ips': '10.0.101.133,10.0.101.134,10.0.101.135', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '8', 'disk_size_gb': '100', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'cluster'}
+2025-08-29 07:58:37,783 INFO 开始执行 Ansible Playbook...
+2025-08-29 08:03:11,570 INFO Ansible 执行成功
+2025-08-29 08:03:11,570 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+skipping: [localhost]
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=李航杰测试用-101.133)
+ok: [localhost] => (item=李航杰测试用-101.134)
+ok: [localhost] => (item=李航杰测试用-101.135)
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: cluster\n将使用集群自动调度\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+changed: [localhost] => (item=['李航杰测试用-101.133', 'ceshi', '10.0.101.133'])
+changed: [localhost] => (item=['李航杰测试用-101.134', 'ceshi1', '10.0.101.134'])
+changed: [localhost] => (item=['李航杰测试用-101.135', 'ceshi2', '10.0.101.135'])
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['李航杰测试用-101.133', 'ceshi', '10.0.101.133']) 
+skipping: [localhost] => (item=['李航杰测试用-101.134', 'ceshi1', '10.0.101.134']) 
+skipping: [localhost] => (item=['李航杰测试用-101.135', 'ceshi2', '10.0.101.135']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['李航杰测试用-101.133', 'ceshi', '10.0.101.133'])
+changed: [localhost] => (item=['李航杰测试用-101.134', 'ceshi1', '10.0.101.134'])
+changed: [localhost] => (item=['李航杰测试用-101.135', 'ceshi2', '10.0.101.135'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 3台\n- 调度策略: 集群自动调度\nVM详细信息:\n1. 李航杰测试用-101.133 -> 10.0.101.133 (主机名: ceshi)\n2. 李航杰测试用-101.134 -> 10.0.101.134 (主机名: ceshi1)\n3. 李航杰测试用-101.135 -> 10.0.101.135 (主机名: ceshi2)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.134 -> localhost]
+ok: [10.0.101.133 -> localhost]
+ok: [10.0.101.135 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.135]
+ok: [10.0.101.134]
+ok: [10.0.101.133]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.133] => {
+    "msg": "正在配置VM: 10.0.101.133\n模板原始密码: leinao@123\n新生成的随机密码: wdDGkQppPd9RFkEQ\n即将注入SSH密钥\n"
+}
+ok: [10.0.101.134] => {
+    "msg": "正在配置VM: 10.0.101.134\n模板原始密码: leinao@123\n新生成的随机密码: 1K9JXqcLkCPkRg4C\n即将注入SSH密钥\n"
+}
+ok: [10.0.101.135] => {
+    "msg": "正在配置VM: 10.0.101.135\n模板原始密码: leinao@123\n新生成的随机密码: YG3SCzoUgpq13ctB\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.135]
+changed: [10.0.101.133]
+changed: [10.0.101.134]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.134] => {
+    "msg": "root密码已成功修改为随机生成的密码: 1K9JXqcLkCPkRg4C"
+}
+ok: [10.0.101.133] => {
+    "msg": "root密码已成功修改为随机生成的密码: wdDGkQppPd9RFkEQ"
+}
+ok: [10.0.101.135] => {
+    "msg": "root密码已成功修改为随机生成的密码: YG3SCzoUgpq13ctB"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.135]
+ok: [10.0.101.133]
+ok: [10.0.101.134]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.135]
+changed: [10.0.101.133]
+changed: [10.0.101.134]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.133] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.133\n"
+}
+ok: [10.0.101.134] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.134\n"
+}
+ok: [10.0.101.135] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.135\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.133]
+ok: [10.0.101.135]
+ok: [10.0.101.134]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.133] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+ok: [10.0.101.134] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+ok: [10.0.101.135] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.133]
+changed: [10.0.101.134]
+changed: [10.0.101.135]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.133]
+skipping: [10.0.101.134]
+skipping: [10.0.101.135]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.135]
+changed: [10.0.101.134]
+changed: [10.0.101.133]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.133] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 29 16:03 .",
+        "dr-xr-x---. 4 root root 197 Aug 29 16:03 ..",
+        "-rw-------  1 root root 761 Aug 29 16:03 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+ok: [10.0.101.134] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 29 16:03 .",
+        "dr-xr-x---. 4 root root 197 Aug 29 16:03 ..",
+        "-rw-------  1 root root 761 Aug 29 16:03 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+ok: [10.0.101.135] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Aug 29 16:03 .",
+        "dr-xr-x---. 4 root root 197 Aug 29 16:03 ..",
+        "-rw-------  1 root root 761 Aug 29 16:03 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.133] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 李航杰测试用-101.133\nIP地址: 10.0.101.133\n主机名: ceshi\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (wdDGkQppPd9RFkEQ)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.133\n2. 密码认证: ssh root@10.0.101.133 (密码: wdDGkQppPd9RFkEQ)\n"
+}
+ok: [10.0.101.134] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 李航杰测试用-101.134\nIP地址: 10.0.101.134\n主机名: ceshi1\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (1K9JXqcLkCPkRg4C)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.134\n2. 密码认证: ssh root@10.0.101.134 (密码: 1K9JXqcLkCPkRg4C)\n"
+}
+ok: [10.0.101.135] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 李航杰测试用-101.135\nIP地址: 10.0.101.135\n主机名: ceshi2\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (YG3SCzoUgpq13ctB)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.135\n2. 密码认证: ssh root@10.0.101.135 (密码: YG3SCzoUgpq13ctB)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.133               : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+10.0.101.134               : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+10.0.101.135               : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=11   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+2025-08-29 08:03:11,570 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.135 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.133 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.134 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-08-29 08:03:11,570 INFO 成功读取密码映射: {'李航杰测试用-101.133': 'wdDGkQppPd9RFkEQ', '李航杰测试用-101.134': '1K9JXqcLkCPkRg4C', '李航杰测试用-101.135': 'YG3SCzoUgpq13ctB'}
+2025-08-29 08:03:11,571 INFO 192.168.12.64 - - [29/Aug/2025 08:03:11] "POST /submit HTTP/1.1" 200 -
+2025-09-01 06:45:40,157 INFO 192.168.12.64 - - [01/Sep/2025 06:45:40] "GET / HTTP/1.1" 200 -
+2025-09-01 06:45:40,426 INFO 192.168.12.64 - - [01/Sep/2025 06:45:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-02 06:41:33,805 INFO 192.168.12.64 - - [02/Sep/2025 06:41:33] "GET / HTTP/1.1" 200 -
+2025-09-02 06:41:34,070 INFO 192.168.12.64 - - [02/Sep/2025 06:41:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-02 07:05:20,603 INFO 192.168.12.64 - - [02/Sep/2025 07:05:20] "GET / HTTP/1.1" 200 -
+2025-09-02 07:06:14,346 INFO 调度策略: cluster
+2025-09-02 07:06:14,347 INFO 配置文件已写入: /app/vm_params.ini
+2025-09-02 07:06:14,347 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'SandStone-28T', 'vm_names': '测试-密钥分发-101.89', 'hostnames': 'miyaofenfa', 'vm_ips': '10.0.101.89', 'template': 'openEuler22.03模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '400', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': 'Leinao-CPU集群', 'resource_pool': 'Resources', 'scheduling_strategy': 'cluster'}
+2025-09-02 07:06:14,347 INFO 开始执行 Ansible Playbook...
+2025-09-02 07:08:25,024 INFO Ansible 执行成功
+2025-09-02 07:08:25,024 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+skipping: [localhost]
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: cluster\n将使用集群自动调度\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 1台\n- 调度策略: 集群自动调度\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: M3GET2PXiAO6SGPu\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: M3GET2PXiAO6SGPu"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.89]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.89]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.89]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.89]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.89]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 12",
+        "drwx------  2 root root  71 Sep  2 15:08 .",
+        "dr-xr-x---. 4 root root 197 Sep  2 15:08 ..",
+        "-rw-------  1 root root 761 Sep  2 15:08 authorized_keys",
+        "-rw-------  1 root root 659 Aug 13 10:12 known_hosts",
+        "-rw-r--r--  1 root root  93 Aug 13 10:12 known_hosts.old",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (M3GET2PXiAO6SGPu)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: M3GET2PXiAO6SGPu)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=11   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+2025-09-02 07:08:25,024 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.9, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-09-02 07:08:25,024 INFO 成功读取密码映射: {'测试-密钥分发-101.89': 'M3GET2PXiAO6SGPu'}
+2025-09-02 07:08:25,025 INFO 192.168.12.64 - - [02/Sep/2025 07:08:25] "POST /submit HTTP/1.1" 200 -
+2025-09-02 07:10:40,376 INFO 192.168.12.64 - - [02/Sep/2025 07:10:40] "GET / HTTP/1.1" 200 -
+2025-09-02 07:11:31,521 INFO ESXi主机配置: 10.0.200.28
+2025-09-02 07:11:31,522 INFO 调度策略: single-esxi
+2025-09-02 07:11:31,522 INFO 配置文件已写入: /app/vm_params.ini
+2025-09-02 07:11:31,522 INFO VM配置: {'vcenter_hostname': '10.0.200.100', 'vcenter_username': 'administrator@vsphere.local', 'vcenter_password': 'Leinao@323', 'datacenter_name': 'Leinao', 'vm_folder': '/vm/其他/运维自用/运维人员', 'datastore_name': 'SandStone-28T', 'vm_names': '测试-密钥分发-101.89,测试-密钥分发-101.90', 'hostnames': 'miyaofenfa,miyaofenfa1', 'vm_ips': '10.0.101.89,10.0.101.90', 'template': 'ubuntu-20.04模板', 'memory_mb': '4096', 'num_cpus': '2', 'disk_size_gb': '400', 'network_name': 'vlan101-测试', 'netmask': '255.255.255.0', 'gateway': '10.0.101.1', 'dns_servers': '223.5.5.5', 'dns_suffix': '', 'cluster': '', 'resource_pool': '', 'scheduling_strategy': 'single-esxi', 'esxi_hostnames': '10.0.200.28'}
+2025-09-02 07:11:31,522 INFO 开始执行 Ansible Playbook...
+2025-09-02 07:15:26,343 INFO Ansible 执行成功
+2025-09-02 07:15:26,343 INFO stdout: 
+PLAY [生成随机密码并通过模板克隆 VM] *******************************************
+
+TASK [读取 ini 文件] ***********************************************************
+ok: [localhost]
+
+TASK [解析 ini 为变量] *********************************************************
+ok: [localhost]
+
+TASK [拆分 VM 列表、hostname 列表、IP 列表] ************************************
+ok: [localhost]
+
+TASK [拆分ESXi主机列表（如果指定了多台主机）] **********************************
+ok: [localhost]
+
+TASK [检查 vm_names、hostnames、vm_ips 数量一致] *******************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [检查ESXi主机列表数量（如果指定了）] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [为每台 VM 生成随机 root 密码] ********************************************
+ok: [localhost] => (item=测试-密钥分发-101.89)
+ok: [localhost] => (item=测试-密钥分发-101.90)
+
+TASK [显示调度策略信息] ********************************************************
+ok: [localhost] => {
+    "msg": "调度策略: single-esxi\n所有VM将部署到: 10.0.200.28\n"
+}
+
+TASK [克隆并等待 guest customization 完成 - 集群自动调度] **********************
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89']) 
+skipping: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90']) 
+skipping: [localhost]
+
+TASK [克隆并等待 guest customization 完成 - 指定单台ESXi主机] ******************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90'])
+
+TASK [克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机] **********
+skipping: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89', '10.0.200.28']) 
+skipping: [localhost]
+
+TASK [把每台 VM 动态加入 new_vms 组] *******************************************
+changed: [localhost] => (item=['测试-密钥分发-101.89', 'miyaofenfa', '10.0.101.89'])
+changed: [localhost] => (item=['测试-密钥分发-101.90', 'miyaofenfa1', '10.0.101.90'])
+
+TASK [写入密码映射到文件，以便后端读取] ****************************************
+changed: [localhost]
+
+TASK [显示部署结果摘要] ********************************************************
+ok: [localhost] => {
+    "msg": "部署完成摘要:\n- 总计部署VM: 2台\n- 调度策略: 指定单台主机(10.0.200.28)\nVM详细信息:\n1. 测试-密钥分发-101.89 -> 10.0.101.89 (主机名: miyaofenfa, ESXi: 10.0.200.28)\n2. 测试-密钥分发-101.90 -> 10.0.101.90 (主机名: miyaofenfa1, ESXi: 10.0.200.28)\n"
+}
+
+PLAY [登录新 VM，修改 root 密码并注入公钥] *************************************
+
+TASK [等待 22 端口打开（控制机探测）] ******************************************
+ok: [10.0.101.89 -> localhost]
+ok: [10.0.101.90 -> localhost]
+
+TASK [测试 SSH 连接（使用模板原始密码）] ***************************************
+ok: [10.0.101.89]
+ok: [10.0.101.90]
+
+TASK [显示当前VM的密码信息] ****************************************************
+ok: [10.0.101.89] => {
+    "msg": "正在配置VM: 10.0.101.89\n模板原始密码: leinao@123\n新生成的随机密码: tjTXibr3I8doOTLG\n即将注入SSH密钥\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "正在配置VM: 10.0.101.90\n模板原始密码: leinao@123\n新生成的随机密码: jXkWA9vgrNZ51C5V\n即将注入SSH密钥\n"
+}
+
+TASK [修改 root 密码为随机生成的新密码] ****************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [确认密码修改成功] ********************************************************
+ok: [10.0.101.89] => {
+    "msg": "root密码已成功修改为随机生成的密码: tjTXibr3I8doOTLG"
+}
+ok: [10.0.101.90] => {
+    "msg": "root密码已成功修改为随机生成的密码: jXkWA9vgrNZ51C5V"
+}
+
+TASK [确保.ssh目录存在并设置正确权限] ******************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [注入SSH公钥到 root 用户] *************************************************
+changed: [10.0.101.89]
+changed: [10.0.101.90]
+
+TASK [确认SSH密钥注入成功] *****************************************************
+ok: [10.0.101.89] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.89\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "SSH公钥注入状态: SUCCESS\n密钥文件: /app/keys/xuji_key.pub\n目标用户: root\nVM IP: 10.0.101.90\n"
+}
+
+TASK [验证authorized_keys文件是否存在] *****************************************
+ok: [10.0.101.90]
+ok: [10.0.101.89]
+
+TASK [显示authorized_keys文件状态] *********************************************
+ok: [10.0.101.89] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "authorized_keys文件状态:\n- 存在: True\n- 大小: 761 bytes\n- 权限: 0600\n"
+}
+
+TASK [验证SSH密钥内容（如果文件存在）] *****************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [创建authorized_keys文件（备用方案，如果文件不存在）] *********************
+skipping: [10.0.101.89]
+skipping: [10.0.101.90]
+
+TASK [最终验证SSH配置] *********************************************************
+changed: [10.0.101.90]
+changed: [10.0.101.89]
+
+TASK [显示最终验证结果] ********************************************************
+ok: [10.0.101.89] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 8",
+        "drwx------ 2 root root  48 Sep  2 07:15 .",
+        "drwx------ 6 root root 178 Sep  2 07:15 ..",
+        "-rw------- 1 root root 761 Aug  5  2022 authorized_keys",
+        "-rw-r--r-- 1 root root 222 Aug 13 02:14 known_hosts",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+ok: [10.0.101.90] => {
+    "final_verification.stdout_lines": [
+        "=== SSH目录结构 ===",
+        "total 8",
+        "drwx------ 2 root root  48 Sep  2 07:15 .",
+        "drwx------ 6 root root 178 Sep  2 07:15 ..",
+        "-rw------- 1 root root 761 Aug  5  2022 authorized_keys",
+        "-rw-r--r-- 1 root root 222 Aug 13 02:14 known_hosts",
+        "=== authorized_keys内容验证 ===",
+        "文件存在，行数: 1",
+        "内容预览：",
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDALYnHJxLnQCWwJ5jREbyXm72PZuogkCZvn8hxJteTfDDNm4zYpkHMImepX2esAIZVK9/tg9DZ2LoNwMuUnIXd6UuhkabxCXZ0hjbSas1ewO53k/CWr7vizHuJsePi3FjkOYyPt4NvN4QnMivXxQMc6KQDrRjiy0p32PJZoeoXNGr1fSPe+phN0FAJAVlr4Nl6M8m0vG9IcyiiyQjQqhweHK6X4le7RDZGiHtGt2fYk+DzSj9xEZhEdjbqdBu4RHiDOPUmG+rLDza1ntjW840G+JT8Vrcgpv2tfD34XhqSNfbyqDU07Jc8HkAV+tGH4pf4MYwVDrZ2cHj6Ol9g94ccse9YsLdvhy9yuDHGoTbWocATEuXm90DQY/QBGkkvy3b97x0yeuJnxFafnUDQd5B27wCBUkeH5IHLEJ852LCQ6iZ/KES1gO4CBftOm7dbNcGn6CyOLh+KRqU4cw0PRhGJHi7mLiL5u2JJL+OZrA9vJ7R6Gn7LS0DdvMa4zHd5IkK0L+tT4irxMA0TsNz7+YFbegKF+hoz1dhauqw2shpHDpFNUIlui5Fr/ACR9un2yLpCocnGxSLk2U/FKdct0e6bcfi46WmVBj9OZjecBKvZid97CjvdeT/xJGH6DFutmhz9BG1sOxkAkHzgTwt2YPKPGOI7kuqFwPSCZHgT/lxKoQ== Auto-injected by VM creation script"
+    ]
+}
+
+TASK [显示VM最终配置摘要] ******************************************************
+ok: [10.0.101.89] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.89\nIP地址: 10.0.101.89\n主机名: miyaofenfa\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (tjTXibr3I8doOTLG)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.89\n2. 密码认证: ssh root@10.0.101.89 (密码: tjTXibr3I8doOTLG)\n"
+}
+ok: [10.0.101.90] => {
+    "msg": "VM配置完成摘要:\n================================\nVM名称: 测试-密钥分发-101.90\nIP地址: 10.0.101.90\n主机名: miyaofenfa1\n--------------------------------\n安全配置:\n✅ root密码: 已修改为随机密码 (jXkWA9vgrNZ51C5V)\n✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)\n✅ SSH访问: 支持密钥认证和密码认证\n--------------------------------\nVM状态: 就绪，可以使用！\n\n连接方式:\n1. SSH密钥认证: ssh -i /app/keys/xuji_key root@10.0.101.90\n2. 密码认证: ssh root@10.0.101.90 (密码: jXkWA9vgrNZ51C5V)\n"
+}
+
+PLAY RECAP *********************************************************************
+10.0.101.89                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+10.0.101.90                : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+localhost                  : ok=12   changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+
+2025-09-02 07:15:26,343 WARNING stderr: [WARNING]: Platform linux on host localhost is using the discovered Python
+interpreter at /usr/local/bin/python3.10, but future installation of another
+Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.90 is using the discovered Python
+interpreter at /usr/bin/python3.8, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host 10.0.101.89 is using the discovered Python
+interpreter at /usr/bin/python3.8, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-09-02 07:15:26,343 INFO 成功读取密码映射: {'测试-密钥分发-101.89': 'tjTXibr3I8doOTLG', '测试-密钥分发-101.90': 'jXkWA9vgrNZ51C5V'}
+2025-09-02 07:15:26,344 INFO 192.168.12.64 - - [02/Sep/2025 07:15:26] "POST /submit HTTP/1.1" 200 -
+2025-09-03 01:12:38,606 INFO 192.168.12.64 - - [03/Sep/2025 01:12:38] "GET / HTTP/1.1" 200 -
+2025-09-03 01:12:38,894 INFO 192.168.12.64 - - [03/Sep/2025 01:12:38] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

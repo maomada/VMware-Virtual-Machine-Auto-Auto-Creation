@@ -1,0 +1,452 @@
+---
+- name: 生成随机密码并通过模板克隆 VM
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    template_root_pass: "leinao@123"
+  tasks:
+    - name: 读取 ini 文件
+      slurp:
+        src: ./vm_params.ini
+      register: ini_raw
+
+    - name: 解析 ini 为变量
+      set_fact:
+        vm_params: "{{ ini_raw.content | b64decode | community.general.from_ini }}"
+
+    - name: 拆分 VM 列表、hostname 列表、IP 列表
+      set_fact:
+        vm_list:       "{{ vm_params.vm_parameters.vm_names.split(',') | map('trim') | list }}"
+        hostname_list: "{{ vm_params.vm_parameters.hostnames.split(',') | map('trim') | list }}"
+        ip_list:       "{{ vm_params.vm_parameters.vm_ips.split(',') | map('trim') | list }}"
+
+    - name: 拆分ESXi主机列表（如果指定了多台主机）
+      set_fact:
+        esxi_list: "{{ vm_params.vm_parameters.esxi_hostnames.split(',') | map('trim') | list if vm_params.vm_parameters.esxi_hostnames is defined and vm_params.vm_parameters.esxi_hostnames != '' else [] }}"
+
+    - name: 检查 vm_names、hostnames、vm_ips 数量一致
+      assert:
+        that:
+          - vm_list | length == hostname_list | length
+          - vm_list | length == ip_list | length
+        fail_msg: "vm_names、hostnames、vm_ips 数量不一致"
+
+    - name: 检查ESXi主机列表数量（如果指定了）
+      assert:
+        that:
+          - esxi_list | length == vm_list | length or esxi_list | length == 0 or esxi_list | length == 1
+        fail_msg: "ESXi主机列表数量必须为0、1或与VM数量相等"
+      when: esxi_list | length > 0
+
+    - name: 为每台 VM 生成随机 root 密码
+      set_fact:
+        vm_passwords: >-
+          {{ vm_passwords | default({}) | combine({ item: lookup('password','/dev/null length=16 chars=ascii_letters,digits') }) }}
+      loop: "{{ vm_list }}"
+      loop_control:
+        loop_var: item
+
+    - name: 显示调度策略信息
+      debug:
+        msg: |
+          调度策略: {{ vm_params.vm_parameters.scheduling_strategy | default('cluster') }}
+          {% if esxi_list | length == 0 %}
+          将使用集群自动调度
+          {% elif esxi_list | length == 1 %}
+          所有VM将部署到: {{ esxi_list[0] }}
+          {% else %}
+          VM将按指定主机分别部署
+          {% endif %}
+
+    # 集群自动调度模式
+    - name: 克隆并等待 guest customization 完成 - 集群自动调度
+      community.vmware.vmware_guest:
+        hostname:       "{{ vm_params.vm_parameters.vcenter_hostname }}"
+        username:       "{{ vm_params.vm_parameters.vcenter_username }}"
+        password:       "{{ vm_params.vm_parameters.vcenter_password }}"
+        validate_certs: false
+        datacenter:     "{{ vm_params.vm_parameters.datacenter_name }}"
+        folder:         "{{ vm_params.vm_parameters.vm_folder }}"
+        name:           "{{ item.0 }}"
+        template:       "{{ vm_params.vm_parameters.template }}"
+        state:          poweredon
+        hardware:
+          memory_mb: "{{ vm_params.vm_parameters.memory_mb }}"
+          num_cpus:  "{{ vm_params.vm_parameters.num_cpus }}"
+        disk:
+          - size_gb:   "{{ vm_params.vm_parameters.disk_size_gb }}"
+            type:      thin
+            datastore: "{{ vm_params.vm_parameters.datastore_name }}"
+        networks:
+          - name:    "{{ vm_params.vm_parameters.network_name }}"
+            ip:      "{{ item.2 }}"
+            netmask: "{{ vm_params.vm_parameters.netmask }}"
+            gateway: "{{ vm_params.vm_parameters.gateway }}"
+        customization:
+          hostname: "{{ item.1 }}"
+          dns_servers: "{{ vm_params.vm_parameters.dns_servers.split(',') }}"
+        wait_for_customization: yes
+        wait_for_ip_address:   yes
+        cluster:       "{{ vm_params.vm_parameters.cluster }}"
+        resource_pool: "{{ vm_params.vm_parameters.resource_pool }}"
+      loop: "{{ vm_list | zip(hostname_list, ip_list) | list }}"
+      when: esxi_list | length == 0
+      register: cluster_deployment_result
+
+    # 单台ESXi主机模式
+    - name: 克隆并等待 guest customization 完成 - 指定单台ESXi主机
+      community.vmware.vmware_guest:
+        hostname:       "{{ vm_params.vm_parameters.vcenter_hostname }}"
+        username:       "{{ vm_params.vm_parameters.vcenter_username }}"
+        password:       "{{ vm_params.vm_parameters.vcenter_password }}"
+        validate_certs: false
+        datacenter:     "{{ vm_params.vm_parameters.datacenter_name }}"
+        folder:         "{{ vm_params.vm_parameters.vm_folder }}"
+        name:           "{{ item.0 }}"
+        template:       "{{ vm_params.vm_parameters.template }}"
+        state:          poweredon
+        hardware:
+          memory_mb: "{{ vm_params.vm_parameters.memory_mb }}"
+          num_cpus:  "{{ vm_params.vm_parameters.num_cpus }}"
+        disk:
+          - size_gb:   "{{ vm_params.vm_parameters.disk_size_gb }}"
+            type:      thin
+            datastore: "{{ vm_params.vm_parameters.datastore_name }}"
+        networks:
+          - name:    "{{ vm_params.vm_parameters.network_name }}"
+            ip:      "{{ item.2 }}"
+            netmask: "{{ vm_params.vm_parameters.netmask }}"
+            gateway: "{{ vm_params.vm_parameters.gateway }}"
+        customization:
+          hostname: "{{ item.1 }}"
+          dns_servers: "{{ vm_params.vm_parameters.dns_servers.split(',') }}"
+        wait_for_customization: yes
+        wait_for_ip_address:   yes
+        esxi_hostname: "{{ esxi_list[0] }}"
+      loop: "{{ vm_list | zip(hostname_list, ip_list) | list }}"
+      when: esxi_list | length == 1
+      register: single_esxi_deployment_result
+
+    # 多台ESXi主机模式 - 这里是关键修复点
+    - name: 克隆并等待 guest customization 完成 - 为每个VM指定不同ESXi主机
+      community.vmware.vmware_guest:
+        hostname:       "{{ vm_params.vm_parameters.vcenter_hostname }}"
+        username:       "{{ vm_params.vm_parameters.vcenter_username }}"
+        password:       "{{ vm_params.vm_parameters.vcenter_password }}"
+        validate_certs: false
+        datacenter:     "{{ vm_params.vm_parameters.datacenter_name }}"
+        folder:         "{{ vm_params.vm_parameters.vm_folder }}"
+        name:           "{{ item.0 }}"
+        template:       "{{ vm_params.vm_parameters.template }}"
+        state:          poweredon
+        hardware:
+          memory_mb: "{{ vm_params.vm_parameters.memory_mb }}"
+          num_cpus:  "{{ vm_params.vm_parameters.num_cpus }}"
+        disk:
+          - size_gb:   "{{ vm_params.vm_parameters.disk_size_gb }}"
+            type:      thin
+            datastore: "{{ vm_params.vm_parameters.datastore_name }}"
+        networks:
+          - name:    "{{ vm_params.vm_parameters.network_name }}"
+            ip:      "{{ item.2 }}"
+            netmask: "{{ vm_params.vm_parameters.netmask }}"
+            gateway: "{{ vm_params.vm_parameters.gateway }}"
+        customization:
+          hostname: "{{ item.1 }}"
+          dns_servers: "{{ vm_params.vm_parameters.dns_servers.split(',') }}"
+        wait_for_customization: yes
+        wait_for_ip_address:   yes
+        esxi_hostname: "{{ item.3 }}"
+        # 注意: 这里没有cluster和resource_pool参数
+      loop: "{{ vm_list | zip(hostname_list, ip_list, esxi_list) | list }}"
+      when: esxi_list | length > 1
+      register: multi_esxi_deployment_result
+
+    - name: 把每台 VM 动态加入 new_vms 组
+      add_host:
+        name:               "{{ item.2 }}"
+        groups:             new_vms
+        ansible_host:       "{{ item.2 }}"
+        ansible_user:       root
+        ansible_ssh_pass:   "{{ template_root_pass }}"
+        new_root_password:  "{{ vm_passwords[item.0] }}"
+        vm_name:            "{{ item.0 }}"
+        vm_hostname:        "{{ item.1 }}"
+      loop: "{{ vm_list | zip(hostname_list, ip_list) | list }}"
+      loop_control:
+        loop_var: item
+
+    - name: 写入密码映射到文件，以便后端读取
+      run_once: true
+      delegate_to: localhost
+      copy:
+        content: "{{ vm_passwords | to_json }}"
+        dest: /tmp/vm_passwords.json
+        mode: '0640'
+        force: true
+
+    - name: 显示部署结果摘要
+      debug:
+        msg: |
+          部署完成摘要:
+          - 总计部署VM: {{ vm_list | length }}台
+          - 调度策略: {% if esxi_list | length == 0 %}集群自动调度{% elif esxi_list | length == 1 %}指定单台主机({{ esxi_list[0] }}){% else %}分别指定主机{% endif %}
+
+          VM详细信息:
+          {% for i in range(vm_list | length) %}
+          {{ i+1 }}. {{ vm_list[i] }} -> {{ ip_list[i] }} (主机名: {{ hostname_list[i] }}{% if esxi_list | length > 1 %}, ESXi: {{ esxi_list[i] }}{% elif esxi_list | length == 1 %}, ESXi: {{ esxi_list[0] }}{% endif %})
+          {% endfor %}
+
+- name: 登录新 VM，修改 root 密码并注入公钥
+  hosts: new_vms
+  gather_facts: no
+  vars:
+    ansible_ssh_common_args: >-
+      -o ControlMaster=no
+      -o StrictHostKeyChecking=no
+      -o UserKnownHostsFile=/dev/null
+
+  tasks:
+    - name: 等待 22 端口打开（控制机探测） 
+      connection: local
+      delegate_to: localhost
+      wait_for:
+        host:    "{{ inventory_hostname }}"
+        port:    22
+        state:   started
+        delay:   10
+        timeout: 300
+
+    - name: 测试 SSH 连接（使用模板原始密码）
+      wait_for_connection:
+        timeout: 300
+        sleep:   5
+
+    - name: 显示当前VM的密码信息
+      debug:
+        msg: |
+          正在配置VM: {{ inventory_hostname }}
+          模板原始密码: {{ ansible_ssh_pass }}
+          新生成的随机密码: {{ new_root_password }}
+          即将注入SSH密钥
+
+    - name: 修改 root 密码为随机生成的新密码
+      shell: echo "root:{{ new_root_password }}" | chpasswd
+      register: password_change_result
+
+    - name: 确认密码修改成功
+      debug:
+        msg: "root密码已成功修改为随机生成的密码: {{ new_root_password }}"
+      when: password_change_result is succeeded
+
+    - name: 确保.ssh目录存在并设置正确权限
+      file:
+        path: /root/.ssh
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+
+    - name: 注入SSH公钥到 root 用户
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file','/app/keys/xuji_key.pub') }}"
+        comment: "Auto-injected by VM creation script"
+        manage_dir: yes
+      register: key_injection_result
+
+    - name: 确认SSH密钥注入成功
+      debug:
+        msg: |
+          SSH公钥注入状态: {{ 'SUCCESS' if key_injection_result is succeeded else 'FAILED' }}
+          密钥文件: /app/keys/xuji_key.pub
+          目标用户: root
+          VM IP: {{ ansible_host }}
+      when: key_injection_result is succeeded
+
+    - name: 验证authorized_keys文件是否存在
+      stat:
+        path: /root/.ssh/authorized_keys
+      register: auth_keys_stat
+
+    - name: 显示authorized_keys文件状态
+      debug:
+        msg: |
+          authorized_keys文件状态:
+          - 存在: {{ auth_keys_stat.stat.exists }}
+          {% if auth_keys_stat.stat.exists %}
+          - 大小: {{ auth_keys_stat.stat.size }} bytes
+          - 权限: {{ auth_keys_stat.stat.mode }}
+          {% endif %}
+
+    - name: 验证SSH密钥内容（如果文件存在）
+      shell: |
+        echo "=== authorized_keys 文件内容 ==="
+        cat /root/.ssh/authorized_keys
+        echo "=== 文件行数统计 ==="
+        wc -l /root/.ssh/authorized_keys
+      register: ssh_verification
+      when: auth_keys_stat.stat.exists
+
+    - name: 创建authorized_keys文件（备用方案，如果文件不存在）
+      shell: |
+        echo "{{ lookup('file','/app/keys/xuji_key.pub') }} Auto-injected by VM creation script" > /root/.ssh/authorized_keys
+        chmod 600 /root/.ssh/authorized_keys
+        echo "备用方案：SSH密钥已手动注入"
+      register: manual_key_injection
+      when: not auth_keys_stat.stat.exists
+
+    - name: 最终验证SSH配置
+      shell: |
+        echo "=== SSH目录结构 ==="
+        ls -la /root/.ssh/
+        echo "=== authorized_keys内容验证 ==="
+        if [ -f /root/.ssh/authorized_keys ]; then
+          echo "文件存在，行数: $(wc -l < /root/.ssh/authorized_keys)"
+          echo "内容预览："
+          head -1 /root/.ssh/authorized_keys
+        else
+          echo "authorized_keys文件不存在"
+        fi
+      register: final_verification
+      failed_when: false
+
+    - name: 收集操作系统发行版信息
+      setup:
+        filter:
+          - ansible_distribution
+          - ansible_distribution_major_version
+          - ansible_distribution_release
+          - ansible_distribution_version
+          - ansible_os_family
+      register: distro_facts
+
+    - name: 设置系统发行版分类
+      set_fact:
+        is_redhat_family: "{{ (distro_facts.ansible_facts.ansible_os_family | default('')) == 'RedHat' }}"
+        is_ubuntu_family: "{{ (distro_facts.ansible_facts.ansible_distribution | default('') | lower) == 'ubuntu' }}"
+
+    - name: 显示操作系统发行版信息
+      debug:
+        msg: |
+          已检测到的发行版信息:
+          - ansible_distribution: {{ distro_facts.ansible_facts.ansible_distribution | default('未知') }}
+          - ansible_distribution_version: {{ distro_facts.ansible_facts.ansible_distribution_version | default('未知') }}
+          - ansible_os_family: {{ distro_facts.ansible_facts.ansible_os_family | default('未知') }}
+          - Red Hat 系列: {{ is_redhat_family }}
+          - Ubuntu 系列: {{ is_ubuntu_family }}
+
+    - name: 构建 LVM 脚本执行顺序
+      set_fact:
+        lvm_script_queue: >-
+          {{ (
+                (is_redhat_family | ternary(['/opt/init-tools/diskAuto.sh'], [])) +
+                (is_ubuntu_family | ternary(['/lvm.sh'], [])) +
+                ['/opt/init-tools/diskAuto.sh', '/lvm.sh']
+             ) | unique }}
+
+    - name: 初始化 LVM 执行状态
+      set_fact:
+        lvm_success: false
+        lvm_execution_results: []
+
+    - name: 顺序执行 LVM 挂载脚本
+      vars:
+        script_label_map:
+          /opt/init-tools/diskAuto.sh: "Red Hat 系列 LVM 挂载脚本"
+          /lvm.sh: "Ubuntu 系列 LVM 挂载脚本"
+      loop: "{{ lvm_script_queue }}"
+      loop_control:
+        loop_var: script_path
+      when: not (lvm_success | default(false))
+      block:
+        - name: 检查 {{ script_path }} 是否存在
+          stat:
+            path: "{{ script_path }}"
+          register: current_script_stat
+
+        - name: 记录缺失的 {{ script_label_map[script_path] | default(script_path) }}
+          when: not current_script_stat.stat.exists
+          set_fact:
+            lvm_execution_results: "{{ (lvm_execution_results | default([])) + [ {
+              'path': script_path,
+              'label': script_label_map[script_path] | default(script_path),
+              'rc': 127,
+              'stdout_lines': [],
+              'stderr_lines': ['脚本不存在或无法访问']
+            } ] }}"
+
+        - name: 修复 {{ script_label_map[script_path] | default(script_path) }} 执行权限
+          when:
+            - current_script_stat.stat.exists
+            - not (current_script_stat.stat.executable | default(false))
+          file:
+            path: "{{ script_path }}"
+            mode: '0755'
+
+        - name: 执行 {{ script_label_map[script_path] | default(script_path) }}
+          when: current_script_stat.stat.exists
+          shell: "/bin/bash {{ script_path }}"
+          args:
+            executable: /bin/bash
+          register: current_script_result
+          failed_when: false
+
+        - name: 记录 {{ script_label_map[script_path] | default(script_path) }} 执行结果
+          when: current_script_stat.stat.exists
+          set_fact:
+            lvm_execution_results: "{{ (lvm_execution_results | default([])) + [ {
+              'path': script_path,
+              'label': script_label_map[script_path] | default(script_path),
+              'rc': current_script_result.rc,
+              'stdout_lines': current_script_result.stdout_lines | default([]),
+              'stderr_lines': current_script_result.stderr_lines | default([])
+            } ] }}"
+
+        - name: 更新 LVM 执行成功状态
+          when: current_script_stat.stat.exists
+          set_fact:
+            lvm_success: "{{ (lvm_success | default(false)) or (current_script_result.rc == 0) }}"
+
+    - name: 验证至少有一个 LVM 脚本执行成功
+      assert:
+        that:
+          - lvm_success | default(false)
+        fail_msg: "所有预定义的 LVM 挂载脚本均执行失败，请手动检查 /opt/init-tools/diskAuto.sh 和 /lvm.sh 的执行情况。"
+
+    - name: 显示 LVM 脚本执行明细
+      debug:
+        msg: |
+          脚本: {{ item.label }} ({{ item.path }})
+          返回码: {{ item.rc }}
+          标准输出:
+          {{ item.stdout_lines | default([]) | join('\n') }}
+          标准错误:
+          {{ item.stderr_lines | default([]) | join('\n') }}
+      loop: "{{ lvm_execution_results }}"
+
+    - name: 显示最终验证结果
+      debug:
+        var: final_verification.stdout_lines
+
+    - name: 显示VM最终配置摘要
+      debug:
+        msg: |
+          VM配置完成摘要:
+          ================================
+          VM名称: {{ vm_name }}
+          IP地址: {{ ansible_host }}
+          主机名: {{ vm_hostname }}
+          --------------------------------
+          安全配置:
+          ✅ root密码: 已修改为随机密码 ({{ new_root_password }})
+          ✅ SSH密钥: 已注入公钥 (/app/keys/xuji_key.pub)
+          ✅ SSH访问: 支持密钥认证和密码认证
+          --------------------------------
+          VM状态: 就绪，可以使用！
+          
+          连接方式:
+          1. SSH密钥认证: ssh -i /app/keys/xuji_key root@{{ ansible_host }}
+          2. 密码认证: ssh root@{{ ansible_host }} (密码: {{ new_root_password }})
