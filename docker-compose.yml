@@ -1,11 +1,7 @@
-version: '3'
+version: "3.8"
 services:
   flask-app:
-    build: .
+    image: maosifen514/vmware-app:latest
+    container_name: vmware-app
     ports:
       - "5000:5000"
-    # 若有需要，可使用 host 网络模式：
-    network_mode: "host"
-    volumes:
-      - .:/app
-    
