@@ -357,58 +357,12 @@
         script_label_map:
           /opt/init-tools/diskAuto.sh: "Red Hat 系列 LVM 挂载脚本"
           /lvm.sh: "Ubuntu 系列 LVM 挂载脚本"
+      include_tasks:
+        file: lvm_script_execution.yml
       loop: "{{ lvm_script_queue }}"
       loop_control:
         loop_var: script_path
       when: not (lvm_success | default(false))
-      block:
-        - name: 检查 {{ script_path }} 是否存在
-          stat:
-            path: "{{ script_path }}"
-          register: current_script_stat
-
-        - name: 记录缺失的 {{ script_label_map[script_path] | default(script_path) }}
-          when: not current_script_stat.stat.exists
-          set_fact:
-            lvm_execution_results: "{{ (lvm_execution_results | default([])) + [ {
-              'path': script_path,
-              'label': script_label_map[script_path] | default(script_path),
-              'rc': 127,
-              'stdout_lines': [],
-              'stderr_lines': ['脚本不存在或无法访问']
-            } ] }}"
-
-        - name: 修复 {{ script_label_map[script_path] | default(script_path) }} 执行权限
-          when:
-            - current_script_stat.stat.exists
-            - not (current_script_stat.stat.executable | default(false))
-          file:
-            path: "{{ script_path }}"
-            mode: '0755'
-
-        - name: 执行 {{ script_label_map[script_path] | default(script_path) }}
-          when: current_script_stat.stat.exists
-          shell: "/bin/bash {{ script_path }}"
-          args:
-            executable: /bin/bash
-          register: current_script_result
-          failed_when: false
-
-        - name: 记录 {{ script_label_map[script_path] | default(script_path) }} 执行结果
-          when: current_script_stat.stat.exists
-          set_fact:
-            lvm_execution_results: "{{ (lvm_execution_results | default([])) + [ {
-              'path': script_path,
-              'label': script_label_map[script_path] | default(script_path),
-              'rc': current_script_result.rc,
-              'stdout_lines': current_script_result.stdout_lines | default([]),
-              'stderr_lines': current_script_result.stderr_lines | default([])
-            } ] }}"
-
-        - name: 更新 LVM 执行成功状态
-          when: current_script_stat.stat.exists
-          set_fact:
-            lvm_success: "{{ (lvm_success | default(false)) or (current_script_result.rc == 0) }}"
 
     - name: 验证至少有一个 LVM 脚本执行成功
       assert:
